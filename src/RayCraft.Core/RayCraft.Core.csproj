@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net10.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<PackageId>RayCraft.Core</PackageId>
+		<Version>1.0.0-beta.1</Version>
+		<Authors>RayCraft</Authors>
+		<Company>DiPiGi Ltd</Company>
+		<Description>Core abstractions for RayCraft UI components (Beta).</Description>
+		<PackageProjectUrl>https://raycraft.dev</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/RayCraftUI/RayCraft</RepositoryUrl>
+	</PropertyGroup>
+
+</Project>
