@@ -1,5 +1,7 @@
 # RayCraft examples
 
+Source: https://github.com/RayCraftUI/RayCraft
+
 Runnable examples for the free controls of [RayCraft.Blazor](https://www.nuget.org/packages/RayCraft.Blazor): EventCalendar, FormBuilder, Captcha, QrCode, Barcode, AddressField, Splitter and PropertyGrid. Each page has a live example with its source and the table of parameters.
 
 This repository holds only demo code. The library comes from the NuGet package and its source is not here.
