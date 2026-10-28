@@ -1,0 +1,77 @@
+name: Publish RayCraft.Blazor to nuget.org
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag of the GitHub Release that holds RayCraft.Blazor.<version>.nupkg"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publish-nuget
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: nuget-release
+    timeout-minutes: 15
+    permissions:
+      id-token: write
+      contents: read
+    env:
+      RELEASE_TAG: ${{ inputs.tag }}
+      GH_TOKEN: ${{ github.token }}
+      NUGET_USER: petergutev
+    steps:
+      - name: Set up .NET
+        uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Download the package from the release
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/pkg"
+          gh release download "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --pattern '*.nupkg' --dir "$RUNNER_TEMP/pkg"
+          ls -l "$RUNNER_TEMP/pkg"
+
+      - name: Check that there is exactly one RayCraft.Blazor package
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP/pkg"
+          count=$(find . -maxdepth 1 -type f -name '*.nupkg' | wc -l)
+          if [ "$count" -ne 1 ]; then
+            echo "::error::Expected exactly one .nupkg in the release, found $count"
+            exit 1
+          fi
+          file=$(find . -maxdepth 1 -type f -name '*.nupkg' -printf '%f\n')
+          if ! [[ "$file" =~ ^RayCraft\.Blazor\.[0-9][0-9A-Za-z.+-]*\.nupkg$ ]]; then
+            echo "::error::File name $file is not RayCraft.Blazor.<version>.nupkg"
+            exit 1
+          fi
+          id=$(unzip -p "$file" '*.nuspec' | sed -n 's:.*<id>\(.*\)</id>.*:\1:p' | head -n 1)
+          if [ "$id" != "RayCraft.Blazor" ]; then
+            echo "::error::Package id in the nuspec is '$id', expected RayCraft.Blazor"
+            exit 1
+          fi
+          echo "PACKAGE_FILE=$RUNNER_TEMP/pkg/$file" >> "$GITHUB_ENV"
+
+      - name: Log in to nuget.org (OIDC, no API key)
+        id: login
+        uses: NuGet/login@8d196754b4036150537f80ac539e15c2f1028841 # v1.2.0
+        with:
+          user: ${{ env.NUGET_USER }}
+
+      - name: Push to nuget.org
+        env:
+          NUGET_API_KEY: ${{ steps.login.outputs.NUGET_API_KEY }}
+        run: |
+          dotnet nuget push "$PACKAGE_FILE" \
+            --api-key "$NUGET_API_KEY" \
+            --source https://api.nuget.org/v3/index.json \
+            --skip-duplicate
