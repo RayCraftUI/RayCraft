@@ -28,8 +28,8 @@
                 @foreach (var control in group)
                 {
                     <li>
-                        <a href="@("/controls/" + control.Slug)">@control.Name</a>
-                        <span>@(control.Examples.Count == 0 ? "No example yet" : control.Examples.Count == 1 ? "1 example" : control.Examples.Count + " examples")</span>
+                        <a href="@("/controls/" + control.Slug)"><span class="control-list__name">@control.Name</span>
+                        <span class="control-list__meta">@(control.Examples.Count == 0 ? "No example yet" : control.Examples.Count == 1 ? "1 example" : control.Examples.Count + " examples")</span></a>
                     </li>
                 }
             </ul>

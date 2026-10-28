@@ -35,6 +35,10 @@ dotnet add package RayCraft.Blazor
 
 Register `builder.Services.AddRayCraft()`, link `_content/RayCraft.Blazor/css/raycraft.css` and `_content/RayCraft.Blazor/raycraft.js` in `App.razor`, add `@using RayCraft.Blazor.Components` to `_Imports.razor` and set an interactive render mode. `src/RayCraft.Examples/Components/App.razor` and `Program.cs` show all of it.
 
+## Look
+
+The pages use paper and ink colors with a red accent, serif headings and flat square corners, in a light and a dark theme. The fonts Playfair Display, Source Sans 3 and JetBrains Mono are served from `wwwroot/fonts`; their license (SIL Open Font License 1.1) is in `THIRD-PARTY-NOTICES.md`. The controls keep their own CSS; the demo only sets their color variables (`--raycraft-*`) to its palette.
+
 ## License
 
 The code in this repository is under the MIT license (`LICENSE`). The RayCraft.Blazor package has its own license, in the package.

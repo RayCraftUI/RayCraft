@@ -1,15 +1,17 @@
 @inherits LayoutComponentBase
 
+<a class="site__skip" href="#content">Skip to the content</a>
 <div class="site">
     <header class="site__bar">
-        <a class="site__brand" href="/">RayCraft examples</a>
+        <a class="site__brand" href="/" aria-label="RayCraft examples, home"><img src="brand/logo-on-dark.svg" alt="RayCraft" /></a>
+        <span class="site__tag">Examples</span>
         <ThemeToggle />
     </header>
     <div class="site__body">
         <nav class="site__nav" aria-label="Controls">
             <ControlFilter Compact InputId="nav-filter" />
         </nav>
-        <main class="site__main">
+        <main class="site__main" id="content" tabindex="-1">
             @Body
         </main>
     </div>
