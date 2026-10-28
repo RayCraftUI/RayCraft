@@ -1,0 +1,12 @@
+<Stack Justify="flex-end">
+    <ProfileMenu Name="Ada Lovelace" Subtitle="ada@example.com">
+        <MenuItem Icon="IconName.User">Profile</MenuItem>
+        <MenuItem Icon="IconName.Settings">Settings</MenuItem>
+        <MenuItem Icon="IconName.Logout" OnClick="@(() => _last = "signed out")">Sign out</MenuItem>
+    </ProfileMenu>
+</Stack>
+<p>Last action: @_last</p>
+
+@code {
+    private string _last = "none";
+}

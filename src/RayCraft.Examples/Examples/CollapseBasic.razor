@@ -1,0 +1,12 @@
+<div class="doc-stack">
+    <Button Variant="Variant.Outlined" OnClick="@(() => _open = !_open)" aria-expanded="@(_open ? "true" : "false")" aria-controls="@(_open ? "collapse-demo" : null)">
+        @(_open ? "Hide details" : "Show details")
+    </Button>
+    <Collapse Expanded="_open" id="collapse-demo">
+        <Card>Details that appear and disappear. The content is not rendered while collapsed.</Card>
+    </Collapse>
+</div>
+
+@code {
+    private bool _open;
+}

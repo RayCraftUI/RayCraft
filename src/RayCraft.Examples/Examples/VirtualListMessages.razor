@@ -1,0 +1,54 @@
+@inject IRayCraftDrag Drag
+
+<div class="doc-row">
+    <VirtualList @ref="_list" TItem="Message" Label="Messages" ItemsProvider="LoadAsync" ItemKey="@(message => message.Id)" ItemHeight="64" Height="22rem"
+                 Multiple="true" @bind-SelectedItems="_selected" Draggable="true" ShowDragHandle="true"
+                 ItemBold="@(message => message.Unread)" OnLoadError="@(_ => _failed = true)">
+        <ItemTemplate Context="message">
+            <div style="min-width:0;line-height:1.35">
+                <div><strong>@message.From</strong> <span style="color:var(--raycraft-text-muted);font-weight:400">@message.Date.ToString("d MMM")</span></div>
+                <div>@message.Subject <span style="color:var(--raycraft-text-muted);font-weight:400">- @message.Preview</span></div>
+            </div>
+        </ItemTemplate>
+    </VirtualList>
+    <div>
+        <TreeView Items="_folders" ItemText="@(folder => folder)" Label="Folders" OnDrop="@((TreeDropEventArgs<string> drop) => OnDropAsync(drop))"
+                  CanDrop="@((folder, payload) => payload is IReadOnlyList<Message>)" />
+        <p>Selected: @_selected.Count. Rows loaded from the server: @_loaded.@(_failed ? " A load failed." : string.Empty)</p>
+        <p>@_log</p>
+        <p>Click selects, Ctrl+click adds, Shift+click selects a range, Shift+arrows extend, Ctrl+A selects all.</p>
+    </div>
+</div>
+
+@code {
+    public sealed record Message(int Id, string From, string Subject, string Preview, DateTime Date, bool Unread);
+
+    private const int Total = 50_000;
+    private static readonly string[] Senders = ["Ana Petrova", "Boris Ivanov", "Cecilia Marin", "Dimitar Kolev"];
+    private static readonly string[] Subjects = ["Quarterly report", "Meeting notes", "Invoice 2026", "Welcome", "Schedule change"];
+
+    private readonly string[] _folders = ["Inbox", "Archive", "Trash"];
+    private VirtualList<Message>? _list;
+    private IReadOnlyList<Message> _selected = [];
+    private int _loaded;
+    private bool _failed;
+    private string _log = "Drag the grip of a row onto a folder.";
+
+    private async Task<VirtualListResult<Message>> LoadAsync(VirtualListRequest request)
+    {
+        await Task.Delay(150, request.CancellationToken);
+        var count = Math.Max(0, Math.Min(request.Count, Total - request.StartIndex));
+        _loaded += count;
+        var items = Enumerable.Range(request.StartIndex, count).Select(index => new Message(index, Senders[index % Senders.Length],
+            $"{Subjects[index % Subjects.Length]} {index + 1}", "This is the first words of the message, shown in grey.",
+            new DateTime(2026, 10, 22).AddMinutes(-index * 7), index % 5 == 0)).ToList();
+        return new VirtualListResult<Message>(items, Total);
+    }
+
+    private Task OnDropAsync(TreeDropEventArgs<string> drop)
+    {
+        var count = (drop.Payload as IReadOnlyList<Message>)?.Count ?? 0;
+        _log = $"{count} message(s) dropped on {drop.Target}.";
+        return Task.CompletedTask;
+    }
+}

@@ -1,0 +1,17 @@
+<Stepper @bind-ActiveIndex="_step" OnFinish="@(() => _done = true)">
+    <StepperStep Title="Account"><TextField @bind-Value="_name" Label="Name" /></StepperStep>
+    <StepperStep Title="Plan"><Select @bind-Value="_plan" Items="_plans" Label="Plan" /></StepperStep>
+    <StepperStep Title="Confirm">Ready to create the account for @_name on the @_plan plan.</StepperStep>
+</Stepper>
+@if (_done)
+{
+    <Alert Severity="Severity.Success">Finished!</Alert>
+}
+
+@code {
+    private int _step;
+    private bool _done;
+    private string? _name;
+    private string _plan = "Free";
+    private readonly string[] _plans = ["Free", "Team", "Enterprise"];
+}

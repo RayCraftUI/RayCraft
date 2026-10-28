@@ -1,0 +1,30 @@
+@using System.ComponentModel.DataAnnotations
+
+<EditForm Model="_model" OnValidSubmit="@(() => _sent = true)">
+    <DataAnnotationsValidator />
+    <div class="doc-stack">
+        <ErrorSummary />
+        <TextField @bind-Value="_model.Name" Label="Name" />
+        <TextField @bind-Value="_model.Email" Label="Email" />
+        <Button Type="submit">Send</Button>
+        @if (_sent)
+        {
+            <Alert Severity="Severity.Success">Sent.</Alert>
+        }
+    </div>
+</EditForm>
+
+@code {
+    private readonly Contact _model = new();
+    private bool _sent;
+
+    private sealed class Contact
+    {
+        [Required(ErrorMessage = "Name is required.")]
+        public string? Name { get; set; }
+
+        [Required(ErrorMessage = "Email is required.")]
+        [EmailAddress(ErrorMessage = "Email is not valid.")]
+        public string? Email { get; set; }
+    }
+}

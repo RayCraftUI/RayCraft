@@ -1,0 +1,24 @@
+<div style="position:relative;height:16rem;background:var(--raycraft-surface-2)">
+    <SpeedDial Label="Actions" Actions="_actions" @bind-Open="_open" Style="position:absolute" />
+</div>
+<p>Last action: @_last</p>
+
+@code {
+    private bool _open;
+    private string _last = "none";
+    private IReadOnlyList<SpeedDialAction> _actions = [];
+
+    protected override void OnInitialized() =>
+        _actions =
+        [
+            new("Share", IconName.Share, () => Pick("Share")),
+            new("Print", IconName.Print, () => Pick("Print")),
+            new("Download", IconName.Download, () => Pick("Download"))
+        ];
+
+    private Task Pick(string name)
+    {
+        _last = name;
+        return Task.CompletedTask;
+    }
+}

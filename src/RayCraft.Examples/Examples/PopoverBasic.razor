@@ -1,0 +1,14 @@
+<Popover @bind-Open="_open">
+    <Activator><Button Variant="Variant.Outlined">Settings</Button></Activator>
+    <ChildContent>
+        <Stack Direction="StackDirection.Column">
+            <Switch @bind-Value="_notify" Label="Notifications" />
+            <Button Size="Size.Small" OnClick="() => _open = false">Done</Button>
+        </Stack>
+    </ChildContent>
+</Popover>
+
+@code {
+    private bool _open;
+    private bool _notify = true;
+}

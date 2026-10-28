@@ -1,0 +1,12 @@
+<div class="doc-stack">
+    <TimeRangePicker @bind-Value="_hours" Label="Working hours" />
+    <TimeRangePicker @bind-Value="_shift" Label="Night shift" AllowOvernight HelperText="22:00 to 06:00 is allowed" />
+    <span>Hours: @Show(_hours)</span>
+</div>
+
+@code {
+    private TimeRange _hours = new(new TimeSpan(9, 0, 0), new TimeSpan(17, 30, 0));
+    private TimeRange _shift = new(new TimeSpan(22, 0, 0), new TimeSpan(6, 0, 0));
+
+    private static string Show(TimeRange range) => $"{range.Start:hh\\:mm} - {range.End:hh\\:mm}";
+}

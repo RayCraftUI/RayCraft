@@ -1,0 +1,10 @@
+<Stack Spacing="8" Wrap>
+    <div style="width:19rem">
+        <Calendar Value="_date" OnPick="@(d => _date = d)" />
+    </div>
+    <span>Picked: @_date?.ToLongDateString()</span>
+</Stack>
+
+@code {
+    private DateTime? _date = DateTime.Today;
+}

@@ -1,0 +1,9 @@
+<Grid Spacing="3">
+    @for (var i = 1; i <= 8; i++)
+    {
+        <GridItem Span="12" Sm="6" Md="4" Lg="3">
+            <Card><ChildContent>Item @i</ChildContent></Card>
+        </GridItem>
+    }
+</Grid>
+<p>One column on extra small screens, two from sm, three from md, four from lg. Resize the window to see it.</p>

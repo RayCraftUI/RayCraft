@@ -1,0 +1,10 @@
+<Stack Align="center" Spacing="6">
+    <ProgressCircular Value="@_value" Label="Upload progress" Size="Size.Small" />
+    <ProgressCircular Value="@_value" Label="Upload progress" />
+    <ProgressCircular Value="@_value" Label="Upload progress" Size="Size.Large" />
+    <Slider @bind-Value="_value" Min="0" Max="100" Label="Value" />
+</Stack>
+
+@code {
+    private double _value = 64;
+}

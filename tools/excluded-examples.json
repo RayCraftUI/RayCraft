@@ -1,0 +1,5 @@
+{
+  "CalendarHeatmapBasic": "needs the HeatDay type of a paid chart control",
+  "FullscreenBasic": "draws a LineChart, which is not in the free package",
+  "StatisticBasic": "draws a Sparkline, which is not in the free package"
+}

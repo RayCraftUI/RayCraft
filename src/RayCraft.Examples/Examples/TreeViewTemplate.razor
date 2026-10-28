@@ -1,0 +1,10 @@
+<TreeView Items="SampleData.Folders" ChildrenSelector="@(f => f.Children)" ExpandAll Label="Folders with icons">
+    <ItemTemplate>
+        @context.Name
+        @if (context.Children.Count > 0)
+        {
+            <Badge>@context.Children.Count</Badge>
+        }
+    </ItemTemplate>
+</TreeView>
+

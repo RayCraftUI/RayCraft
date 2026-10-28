@@ -1,0 +1,11 @@
+<div class="doc-stack">
+    <FileUpload Label="Attachments" Multiple="true" MaxFiles="3" MaxFileSize="2097152" FilesChanged="OnFiles" />
+    <FileUpload Label="Images only" Accept="image/*,.svg" FilesChanged="OnFiles" />
+    <span>Chosen files: @_count</span>
+</div>
+
+@code {
+    private int _count;
+
+    private void OnFiles(IReadOnlyList<IBrowserFile> files) => _count = files.Count;
+}

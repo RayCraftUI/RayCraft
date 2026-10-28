@@ -1,0 +1,14 @@
+<div class="doc-stack">
+    <SearchBox @bind-Value="_query" Label="Filter" Placeholder="Try 'ar'" SearchOnInput="true" OnSearch="@(_ => { })" />
+    <ul>
+        @foreach (var country in _countries.Where(c => string.IsNullOrEmpty(_query) || c.Contains(_query, StringComparison.OrdinalIgnoreCase)))
+        {
+            <li><Highlighter Text="@country" Query="@_query" /></li>
+        }
+    </ul>
+</div>
+
+@code {
+    private string? _query = "ar";
+    private readonly string[] _countries = ["Bulgaria", "Argentina", "Germany", "Norway", "Portugal", "Canada", "Spain"];
+}

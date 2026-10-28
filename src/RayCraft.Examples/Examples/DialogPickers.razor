@@ -1,0 +1,21 @@
+@inject IRayCraftDialogs Dialogs
+
+<div class="doc-stack">
+    <Stack Direction="StackDirection.Row">
+        <Button Variant="Variant.Outlined" OnClick="PickColor">Pick a color</Button>
+        <Button Variant="Variant.Outlined" OnClick="PickFont">Pick a font</Button>
+    </Stack>
+    <p style="@Style">Sample text in the chosen color and font.</p>
+</div>
+
+@code {
+    private string? _color;
+    private FontChoice? _font;
+
+    private string? Style => _font is null && _color is null ? null :
+        $"{(_color is null ? null : $"color:{_color};")}{(_font is null ? null : $"font-family:'{_font.Family}';font-size:{_font.Size.ToString(System.Globalization.CultureInfo.InvariantCulture)}pt;font-weight:{(_font.Bold ? 700 : 400)};font-style:{(_font.Italic ? "italic" : "normal")};text-decoration:{(_font.Underline ? "underline" : "none")}")}";
+
+    private async Task PickColor() => _color = await Dialogs.PickColorAsync("Text color", _color) ?? _color;
+
+    private async Task PickFont() => _font = await Dialogs.PickFontAsync("Font", _font) ?? _font;
+}

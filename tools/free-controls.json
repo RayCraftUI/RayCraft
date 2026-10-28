@@ -1,0 +1,198 @@
+{
+  "Buttons": [
+    "Button",
+    "IconButton",
+    "ButtonGroup",
+    "ToggleButton",
+    "SplitButton",
+    "FloatingActionButton",
+    "SpeedDial",
+    "ProgressButton",
+    "CopyButton"
+  ],
+  "TextAndNumbers": [
+    "TextField",
+    "NumericField",
+    "PercentField",
+    "MoneyField",
+    "MaskedInput",
+    "OtpInput",
+    "SearchBox",
+    "PasswordStrength",
+    "InPlaceEditor"
+  ],
+  "ListSelection": [
+    "Select",
+    "DropDownList",
+    "MultiSelect",
+    "ListBox",
+    "Autocomplete",
+    "MultiColumnComboBox",
+    "Cascader",
+    "DropDownTree",
+    "TagInput",
+    "Mention"
+  ],
+  "SlidersAndRating": [
+    "Slider",
+    "RangeSlider",
+    "RangeSelector",
+    "Rating",
+    "RatingDisplay"
+  ],
+  "ColorAndFile": [
+    "ColorPicker",
+    "ColorPalette",
+    "ColorButton",
+    "FileUpload",
+    "SignaturePad"
+  ],
+  "Editors": [
+    "MarkdownEditor",
+    "AddressField"
+  ],
+  "Choice": [
+    "Checkbox",
+    "CheckboxGroup",
+    "Radio",
+    "RadioGroup",
+    "Switch",
+    "Chip",
+    "ChipSet",
+    "ToggleGroup",
+    "TransferList"
+  ],
+  "DateTime": [
+    "Calendar",
+    "DatePicker",
+    "DateTimePicker",
+    "DateTimeRangePicker",
+    "MonthPicker",
+    "YearPicker",
+    "WeekPicker",
+    "TimeField",
+    "TimePicker",
+    "TimeRangePicker",
+    "TimeSpanPicker",
+    "EventCalendar"
+  ],
+  "Forms": [
+    "ErrorSummary",
+    "FormLayout",
+    "FormState",
+    "LoginForm",
+    "RegisterForm",
+    "Captcha",
+    "FormBuilder"
+  ],
+  "Layout": [
+    "Container",
+    "Stack",
+    "Grid",
+    "GridItem",
+    "Spacer",
+    "Divider",
+    "Card",
+    "Panel",
+    "Fieldset",
+    "Toolbar",
+    "Splitter",
+    "Accordion",
+    "Collapse",
+    "TagCloud",
+    "TitleIndex"
+  ],
+  "Navigation": [
+    "AppBar",
+    "Drawer",
+    "NavMenu",
+    "NavItem",
+    "NavGroup",
+    "Tabs",
+    "Stepper",
+    "Wizard",
+    "Breadcrumbs",
+    "Menu",
+    "MenuItem",
+    "ContextMenu",
+    "MenuBar",
+    "CommandContextMenu",
+    "TextContextMenu",
+    "ProfileMenu",
+    "Pagination",
+    "TreeView",
+    "ScrollSpy"
+  ],
+  "Overlays": [
+    "Dialog",
+    "DialogHost",
+    "Popover",
+    "Tooltip",
+    "Overlay",
+    "Lightbox",
+    "Tour",
+    "ColorDialog",
+    "FontDialog",
+    "SnackbarHost"
+  ],
+  "Feedback": [
+    "Alert",
+    "Badge",
+    "BusyOverlay",
+    "CookieConsent",
+    "EmptyState",
+    "NotificationCenter",
+    "ProgressBar",
+    "ProgressCircular",
+    "ResultPage",
+    "Skeleton",
+    "SkeletonPreset",
+    "Spinner"
+  ],
+  "Content": [
+    "Typography",
+    "Icon",
+    "Image",
+    "ImageGallery",
+    "Avatar",
+    "AvatarGroup",
+    "Link",
+    "Statistic",
+    "Descriptions",
+    "Timeline",
+    "Carousel",
+    "Countdown",
+    "Highlighter",
+    "Marquee",
+    "CodeBlock",
+    "Markdown",
+    "QrCode",
+    "Barcode",
+    "PricingTable",
+    "CommentThread",
+    "ActivityFeed"
+  ],
+  "LightData": [
+    "Table",
+    "List",
+    "Repeater",
+    "VirtualList",
+    "PropertyGrid"
+  ],
+  "Drag": [
+    "Sortable"
+  ],
+  "Preferences": [
+    "ThemeToggle",
+    "ThemeMenu",
+    "DensityToggle",
+    "LanguageToggle"
+  ],
+  "Utilities": [
+    "BreakpointObserver",
+    "Fullscreen",
+    "Hotkey",
+    "InfiniteScroll",
+    "ScrollToTop"
+  ]
+}

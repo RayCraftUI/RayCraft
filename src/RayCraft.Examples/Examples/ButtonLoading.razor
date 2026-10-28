@@ -1,0 +1,27 @@
+<Stack Align="center">
+    <Button Loading="_saving" OnClick="SaveManual">Loading</Button>
+    <Button BusyWhileClicking="true" Variant="Variant.Outlined" OnClick="SaveAutomatic">Busy on click</Button>
+    <span>@_status</span>
+</Stack>
+
+@code {
+    private bool _saving;
+    private string _status = "Idle";
+
+    private async Task SaveManual()
+    {
+        _saving = true;
+        _status = "Saving...";
+        StateHasChanged();
+        await Task.Delay(1500);
+        _saving = false;
+        _status = "Saved";
+    }
+
+    private async Task SaveAutomatic()
+    {
+        _status = "Working...";
+        await Task.Delay(1500);
+        _status = "Done";
+    }
+}

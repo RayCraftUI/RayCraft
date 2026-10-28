@@ -1,0 +1,12 @@
+<Stack Direction="StackDirection.Column" Spacing="4">
+    @foreach (var variant in new[] { Variant.Filled, Variant.Outlined, Variant.Text })
+    {
+        <Stack Wrap Align="center">
+            <span style="width:5rem">@variant</span>
+            @foreach (var color in Enum.GetValues<ButtonColor>())
+            {
+                <Button Variant="variant" Color="color">@color</Button>
+            }
+        </Stack>
+    }
+</Stack>

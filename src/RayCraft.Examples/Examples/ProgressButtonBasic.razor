@@ -1,0 +1,32 @@
+<Stack Spacing="3">
+    <ProgressButton Busy="_busy" Progress="_progress" OnClick="Run">@(_busy ? "Uploading" : "Upload")</ProgressButton>
+    <ProgressButton Busy="_waiting" OnClick="Wait" Variant="Variant.Outlined">Save</ProgressButton>
+</Stack>
+
+@code {
+    private bool _busy;
+    private bool _waiting;
+    private double? _progress;
+
+    private async Task Run()
+    {
+        _busy = true;
+        for (var step = 0; step <= 100; step += 10)
+        {
+            _progress = step;
+            StateHasChanged();
+            await Task.Delay(150);
+        }
+
+        _busy = false;
+        _progress = null;
+    }
+
+    private async Task Wait()
+    {
+        _waiting = true;
+        StateHasChanged();
+        await Task.Delay(1500);
+        _waiting = false;
+    }
+}

@@ -1,0 +1,14 @@
+<Toolbar Label="Editor">
+    <IconButton Icon="IconName.Undo" Label="Undo" />
+    <IconButton Icon="IconName.Redo" Label="Redo" />
+    <Divider Vertical="true" />
+    <ToggleButton @bind-Pressed="_bold" Size="Size.Small">Bold</ToggleButton>
+    <ToggleButton @bind-Pressed="_italic" Size="Size.Small">Italic</ToggleButton>
+    <Divider Vertical="true" />
+    <Button Variant="Variant.Text" Size="Size.Small" StartIcon="IconName.Print">Print</Button>
+</Toolbar>
+
+@code {
+    private bool _bold;
+    private bool _italic;
+}

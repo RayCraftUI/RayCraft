@@ -1,0 +1,10 @@
+<div class="doc-stack">
+    <Sortable TItem="string" Items="_tasks" ItemsChanged="@(items => _tasks = items.ToList())" Label="Tasks">
+        <ItemTemplate>@context</ItemTemplate>
+    </Sortable>
+    <span>Order: @string.Join(" > ", _tasks)</span>
+</div>
+
+@code {
+    private List<string> _tasks = ["Design", "Build", "Test", "Review", "Release"];
+}

@@ -1,0 +1,14 @@
+<VirtualList TItem="string" Label="Log lines" Items="_lines" @bind-SelectedItem="_selected" Height="14rem" ItemHeight="34" />
+<p>Selected: @(_selected ?? "none")</p>
+
+<VirtualList TItem="Person" Label="People with a template" Items="_people" Height="12rem" ItemHeight="44" Selectable="false">
+    <ItemTemplate Context="person">
+        <strong>@person.Name</strong> <span>@person.Department</span>
+    </ItemTemplate>
+</VirtualList>
+
+@code {
+    private readonly List<string> _lines = Enumerable.Range(1, 200000).Select(n => $"Line {n:N0}: request processed").ToList();
+    private readonly List<Person> _people = Enumerable.Range(0, 5000).Select(n => SampleData.People[n % SampleData.People.Count] with { Name = $"{SampleData.People[n % SampleData.People.Count].Name} {n + 1}" }).ToList();
+    private string? _selected;
+}

@@ -1,0 +1,32 @@
+<div class="doc-demo-box" tabindex="0" @oncontextmenu="Show" @oncontextmenu:preventDefault="true">
+    Right-click anywhere in this box. Last command: @_last
+</div>
+
+<CommandContextMenu Open="_open" X="_x" Y="_y" Items="_items" Label="Box menu" OnClose="Close" OnPick="Picked" />
+
+@code {
+    private bool _open;
+    private double _x;
+    private double _y;
+    private string _last = "none";
+
+    private readonly IReadOnlyList<MenuCommand> _items =
+    [
+        new("Copy", Shortcut: "Ctrl+C", Icon: IconName.Copy),
+        new("Paste", Shortcut: "Ctrl+V", Icon: IconName.Paste),
+        MenuCommand.Separator,
+        new("Sort", Children: [new("Ascending"), new("Descending")]),
+        new("Delete", Disabled: true)
+    ];
+
+    private void Show(MouseEventArgs e)
+    {
+        _x = e.ClientX;
+        _y = e.ClientY;
+        _open = true;
+    }
+
+    private void Close() => _open = false;
+
+    private void Picked(MenuCommand command) => _last = command.Label ?? string.Empty;
+}

@@ -1,0 +1,11 @@
+<div class="doc-row">
+    <ColorButton Icon="IconName.TextColor" Label="Text color" @bind-Value="_text" />
+    <ColorButton Icon="IconName.FillColor" Label="Fill color" @bind-Value="_fill" FallbackColor="#ffff00" />
+    <ColorButton Icon="IconName.Highlight" Label="Highlight (disabled)" Value="_fill" Disabled="true" />
+</div>
+<p>Text: @(_text ?? "default"), fill: @(_fill ?? "none")</p>
+
+@code {
+    private string? _text = "#cc0000";
+    private string? _fill;
+}

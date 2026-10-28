@@ -1,0 +1,13 @@
+<Stack Direction="StackDirection.Column" Spacing="4">
+    <ProgressBar Value="_value" Label="Upload" />
+    <ProgressBar Value="80" Severity="Severity.Success" Label="Done" />
+    <ProgressBar Label="Loading" />
+    <Stack>
+        <Button Size="Size.Small" OnClick="() => _value = Math.Max(0, _value - 10)">−10</Button>
+        <Button Size="Size.Small" OnClick="() => _value = Math.Min(100, _value + 10)">+10</Button>
+    </Stack>
+</Stack>
+
+@code {
+    private double _value = 40;
+}

@@ -1,0 +1,19 @@
+<TreeView Items="_roots" ChildrenLoader="LoadAsync" HasChildren="@(node => node.Depth < 3)" ItemText="@(node => node.Name)"
+          @bind-SelectedItem="_selected" OnLoadError="@(_ => _failed = true)" Label="Remote folders" />
+<p>Selected: @(_selected?.Path ?? "none"). Folders loaded from the server: @_loadCount.@(_failed ? " The last load failed." : string.Empty)</p>
+
+@code {
+    private sealed record Node(string Path, string Name, int Depth);
+
+    private readonly List<Node> _roots = [new("Documents", "Documents", 0), new("Pictures", "Pictures", 0), new("Music", "Music", 0)];
+    private Node? _selected;
+    private int _loadCount;
+    private bool _failed;
+
+    private async Task<IEnumerable<Node>> LoadAsync(Node parent)
+    {
+        await Task.Delay(700);
+        _loadCount++;
+        return Enumerable.Range(1, 3).Select(number => new Node($"{parent.Path}/Folder {number}", $"Folder {number}", parent.Depth + 1)).ToList();
+    }
+}

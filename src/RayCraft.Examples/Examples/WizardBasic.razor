@@ -1,0 +1,58 @@
+<div class="doc-stack">
+    <Wizard @ref="_wizard" @bind-ActiveIndex="_step" ShowProgress OnFinish="Finish" OnCancel="Cancel" OnStepChanging="Changing" FinishText="Create account">
+        <CompletedContent>
+            <p>The account for <strong>@_company</strong> was created on the @_plan plan.</p>
+            <Button Variant="Variant.Outlined" OnClick="Restart">Start again</Button>
+        </CompletedContent>
+        <ChildContent>
+            <WizardStep Title="Company" Description="Who is it for" Validate="CheckCompany" Error="@(_error is not null)">
+                <TextField @bind-Value="_company" Label="Company name" HelperText="@_error" />
+            </WizardStep>
+            <WizardStep Title="Plan" Description="Pick a size">
+                <Select @bind-Value="_plan" Items="_plans" Label="Plan" />
+            </WizardStep>
+            <WizardStep Title="Invite" Optional>
+                <TextField @bind-Value="_invite" Label="Colleague e-mail" HelperText="You can also do this later." />
+            </WizardStep>
+            <WizardStep Title="Confirm">
+                <p>Create an account for @_company on the @_plan plan@(string.IsNullOrWhiteSpace(_invite) ? "." : $" and invite {_invite}.")</p>
+            </WizardStep>
+        </ChildContent>
+    </Wizard>
+    <p>@_message</p>
+</div>
+
+@code {
+    private readonly string[] _plans = ["Free", "Team", "Enterprise"];
+    private Wizard? _wizard;
+    private int _step;
+    private string? _company;
+    private string? _invite;
+    private string? _error;
+    private string _plan = "Team";
+    private string _message = "Finished steps can be reopened from the header.";
+
+    private Task<bool> CheckCompany()
+    {
+        _error = string.IsNullOrWhiteSpace(_company) ? "Enter the company name to continue." : null;
+        return Task.FromResult(_error is null);
+    }
+
+    private void Changing(WizardStepChange change) => _message = $"Moving from step {change.From + 1} to step {change.To + 1}.";
+
+    private void Finish() => _message = "Done.";
+
+    private void Cancel()
+    {
+        _step = 0;
+        _message = "Cancelled.";
+    }
+
+    private async Task Restart()
+    {
+        _company = null;
+        _invite = null;
+        _message = "Started again.";
+        await _wizard!.RestartAsync();
+    }
+}

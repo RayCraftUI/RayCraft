@@ -1,0 +1,9 @@
+<div class="doc-stack">
+    <Slider @bind-Value="_volume" Label="Volume" />
+    <Slider @bind-Value="_temperature" Label="Temperature" Min="-10" Max="10" Step="0.5" />
+</div>
+
+@code {
+    private double _volume = 40;
+    private double _temperature = 2.5;
+}

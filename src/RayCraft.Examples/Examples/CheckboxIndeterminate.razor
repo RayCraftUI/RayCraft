@@ -1,0 +1,20 @@
+<div class="doc-stack">
+    <Checkbox Value="AllChecked" ValueChanged="SetAll" ValueExpression="@(() => AllChecked)" Indeterminate="SomeChecked" Label="Select all" />
+    @foreach (var name in _names.Keys.ToList())
+    {
+        var key = name;
+        <Checkbox Value="_names[key]" ValueChanged="@(v => _names[key] = v)" ValueExpression="@(() => _names[key])" Label="@key" />
+    }
+</div>
+
+@code {
+    private readonly Dictionary<string, bool> _names = new() { ["Mail"] = true, ["Calendar"] = false, ["Files"] = false };
+
+    private bool AllChecked => _names.Values.All(v => v);
+    private bool SomeChecked => !AllChecked && _names.Values.Any(v => v);
+
+    private void SetAll(bool value)
+    {
+        foreach (var key in _names.Keys.ToList()) _names[key] = value;
+    }
+}

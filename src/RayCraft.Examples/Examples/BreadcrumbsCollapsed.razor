@@ -1,0 +1,12 @@
+<div class="doc-stack">
+    <Breadcrumbs Items="_items" MaxItems="4" />
+    <Breadcrumbs Items="_items" />
+</div>
+
+@code {
+    private readonly BreadcrumbItem[] _items =
+    [
+        new("Home", "/"), new("Projects", "/projects"), new("RayCraft", "/projects/raycraft"), new("Docs", "/projects/raycraft/docs"),
+        new("Components", "/projects/raycraft/docs/components"), new("Breadcrumbs")
+    ];
+}

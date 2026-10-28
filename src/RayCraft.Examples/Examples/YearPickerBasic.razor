@@ -1,0 +1,10 @@
+<div class="doc-stack">
+    <YearPicker @bind-Value="_year" Label="Year" />
+    <YearPicker @bind-Value="_limited" Label="Between 2000 and 2030" MinYear="2000" MaxYear="2030" />
+    <span>Selected: @(_year?.ToString() ?? "none")</span>
+</div>
+
+@code {
+    private int? _year = DateTime.Today.Year;
+    private int? _limited;
+}

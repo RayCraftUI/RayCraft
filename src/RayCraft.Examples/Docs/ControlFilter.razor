@@ -1,0 +1,56 @@
+<div class="filter">
+    <label class="filter__label" for="@InputId">Find a control</label>
+    <input id="@InputId" class="filter__input" type="search" placeholder="Type a name" autocomplete="off"
+           value="@_text" @oninput="OnInput" />
+</div>
+
+@if (Groups.Count == 0)
+{
+    <p>No control matches "@_text".</p>
+}
+
+@foreach (var group in Groups)
+{
+    <section class="@(Compact ? "group group--compact" : "group")" aria-label="@ControlCatalog.CategoryTitle(group.Key)">
+        <h2 class="group__title">@ControlCatalog.CategoryTitle(group.Key) <span class="group__count">@group.Count()</span></h2>
+        @if (Compact)
+        {
+            <ul>
+                @foreach (var control in group)
+                {
+                    <li><NavLink href="@("/controls/" + control.Slug)">@control.Name</NavLink></li>
+                }
+            </ul>
+        }
+        else
+        {
+            <ul class="control-list">
+                @foreach (var control in group)
+                {
+                    <li>
+                        <a href="@("/controls/" + control.Slug)">@control.Name</a>
+                        <span>@(control.Examples.Count == 0 ? "No example yet" : control.Examples.Count == 1 ? "1 example" : control.Examples.Count + " examples")</span>
+                    </li>
+                }
+            </ul>
+        }
+    </section>
+}
+
+@code {
+    private string _text = string.Empty;
+
+    [Parameter] public bool Compact { get; set; }
+
+    [Parameter] public string InputId { get; set; } = "control-filter";
+
+    private IReadOnlyList<IGrouping<string, ControlDoc>> Groups =>
+        string.IsNullOrWhiteSpace(_text)
+            ? ControlCatalog.Groups
+            : ControlCatalog.All
+                .Where(control => control.Name.Contains(_text.Trim(), StringComparison.OrdinalIgnoreCase))
+                .GroupBy(control => control.Category)
+                .ToList();
+
+    private void OnInput(ChangeEventArgs args) => _text = args.Value?.ToString() ?? string.Empty;
+}

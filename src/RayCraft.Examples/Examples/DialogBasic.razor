@@ -1,0 +1,13 @@
+<Button OnClick="() => _open = true">Open dialog</Button>
+
+<Dialog @bind-Open="_open" Title="Delete item?">
+    <ChildContent>This action cannot be undone.</ChildContent>
+    <Actions>
+        <Button Variant="Variant.Outlined" OnClick="() => _open = false">Cancel</Button>
+        <Button OnClick="() => _open = false">Delete</Button>
+    </Actions>
+</Dialog>
+
+@code {
+    private bool _open;
+}

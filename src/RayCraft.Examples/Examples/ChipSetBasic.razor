@@ -1,0 +1,12 @@
+<div class="doc-stack">
+    <ChipSet TValue="string" Label="Filters" Items="_filters" Multiple="true" @bind-Values="_selected" />
+    <ChipSet TValue="string" Label="Sort by (one)" Items="_sorts" @bind-Value="_sort" />
+    <span>@string.Join(", ", _selected); sorted by @_sort</span>
+</div>
+
+@code {
+    private readonly string[] _filters = ["Open", "Assigned to me", "High priority", "This week"];
+    private readonly string[] _sorts = ["Newest", "Oldest", "Priority"];
+    private IReadOnlyCollection<string> _selected = new List<string> { "Open" };
+    private string _sort = "Newest";
+}

@@ -1,0 +1,25 @@
+<div tabindex="0" role="region" aria-label="Loaded items" style="max-height:14rem;overflow:auto;border:1px solid var(--raycraft-border)">
+    <InfiniteScroll HasMore="@(_items.Count < 60)" Loading="_loading" OnLoadMore="Load">
+        <List Dense="true">
+            @foreach (var number in _items)
+            {
+                <ListItem Text="@("Item " + number)" SecondaryText="@("Loaded in batch " + ((number - 1) / 15 + 1))" />
+            }
+        </List>
+    </InfiniteScroll>
+</div>
+<p>@_items.Count items loaded. Scroll inside the box to load more.</p>
+
+@code {
+    private readonly List<int> _items = Enumerable.Range(1, 15).ToList();
+    private bool _loading;
+
+    private async Task Load()
+    {
+        _loading = true;
+        StateHasChanged();
+        await Task.Delay(600);
+        _items.AddRange(Enumerable.Range(_items.Count + 1, 15));
+        _loading = false;
+    }
+}

@@ -1,0 +1,9 @@
+<div style="position:relative;height:9rem;background:var(--raycraft-surface-2)">
+    <FloatingActionButton Icon="IconName.Add" Label="Add item" Style="position:absolute" OnClick="() => _count++" />
+    <FloatingActionButton Icon="IconName.Edit" Label="Edit" Extended="true" Position="FabPosition.BottomLeft" Style="position:absolute" />
+</div>
+<p>Items added: @_count</p>
+
+@code {
+    private int _count;
+}

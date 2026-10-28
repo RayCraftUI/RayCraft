@@ -1,0 +1,44 @@
+<Stepper @bind-ActiveIndex="_step" OnFinish="@(() => _done = true)">
+    <StepperStep Title="Account" Validate="CheckAccount">
+        <TextField @bind-Value="_name" Label="Your name" />
+        @if (_error is not null)
+        {
+            <Alert Severity="Severity.Error">@_error</Alert>
+        }
+    </StepperStep>
+    <StepperStep Title="Plan" Validate="CheckPlan">
+        <RadioGroup @bind-Value="_plan" Items="_plans" Label="Choose a plan" />
+        @if (_error is not null)
+        {
+            <Alert Severity="Severity.Error">@_error</Alert>
+        }
+    </StepperStep>
+    <StepperStep Title="Confirm">
+        <p>@_name will get the @_plan plan.</p>
+        @if (_done)
+        {
+            <Alert Severity="Severity.Success">Done.</Alert>
+        }
+    </StepperStep>
+</Stepper>
+
+@code {
+    private readonly string[] _plans = ["Free", "Team", "Enterprise"];
+    private int _step;
+    private string? _name;
+    private string? _plan;
+    private string? _error;
+    private bool _done;
+
+    private Task<bool> CheckAccount()
+    {
+        _error = string.IsNullOrWhiteSpace(_name) ? "Enter your name to continue." : null;
+        return Task.FromResult(_error is null);
+    }
+
+    private Task<bool> CheckPlan()
+    {
+        _error = _plan is null ? "Choose a plan to continue." : null;
+        return Task.FromResult(_error is null);
+    }
+}

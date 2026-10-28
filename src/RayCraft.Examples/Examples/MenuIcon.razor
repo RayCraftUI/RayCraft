@@ -1,0 +1,9 @@
+<Menu Icon="IconName.MoreVertical" Label="More actions" ButtonVariant="Variant.Text">
+    <MenuItem Icon="IconName.Edit" OnClick="@(() => _last = "Edit")">Edit</MenuItem>
+    <MenuItem Icon="IconName.Copy" OnClick="@(() => _last = "Duplicate")">Duplicate</MenuItem>
+</Menu>
+<p>Last action: @(_last ?? "none")</p>
+
+@code {
+    private string? _last;
+}

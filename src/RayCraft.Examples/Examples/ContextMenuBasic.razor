@@ -1,0 +1,15 @@
+<ContextMenu>
+    <ChildContent>
+        <div class="doc-demo-box" tabindex="0">Right-click (or press the context menu key) anywhere in this box. Last action: @_last</div>
+    </ChildContent>
+    <Items>
+        <MenuItem Icon="IconName.Copy" OnClick="@(() => _last = "Copy")">Copy</MenuItem>
+        <MenuItem Icon="IconName.Paste" OnClick="@(() => _last = "Paste")">Paste</MenuItem>
+        <MenuItem Icon="IconName.Delete" OnClick="@(() => _last = "Delete")">Delete</MenuItem>
+        <MenuItem Disabled="true">Unavailable</MenuItem>
+    </Items>
+</ContextMenu>
+
+@code {
+    private string _last = "none";
+}

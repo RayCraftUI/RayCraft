@@ -1,0 +1,19 @@
+<div class="doc-stack">
+    <TagCloud Label="Topics" Tags="_tags" Selected="_picked" OnTagClick="Pick" />
+    <p>@(_picked.Count == 0 ? "Click a tag to select it." : "Selected: " + string.Join(", ", _picked))</p>
+</div>
+
+@code {
+    private readonly List<string> _picked = new();
+
+    private readonly TagCloudItem[] _tags =
+    {
+        new("Blazor", 42), new("Accessibility", 31), new("Charts", 25), new("Forms", 18), new("Themes", 14),
+        new("Localization", 11), new("Grids", 36), new("Scheduling", 9), new("Maps", 6), new("Reports", 12), new("Icons", 4)
+    };
+
+    private void Pick(TagCloudItem tag)
+    {
+        if (!_picked.Remove(tag.Text)) _picked.Add(tag.Text);
+    }
+}

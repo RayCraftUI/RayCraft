@@ -1,0 +1,19 @@
+<div class="doc-stack">
+    <Autocomplete TItem="City" @bind-Value="_city" Items="_cities" ItemText="@(c => c.Name)" GroupBy="@(c => c.Country)" ShowToggle="true" Label="City" Placeholder="Pick or type a city">
+        <OptionTemplate>@context.Name <span class="raycraft-text raycraft-text--caption">@context.Population</span></OptionTemplate>
+    </Autocomplete>
+    <span>Selected: @(_city?.Name ?? "none")</span>
+</div>
+
+@code {
+    private sealed record City(string Name, string Country, string Population);
+
+    private City? _city;
+
+    private readonly City[] _cities =
+    [
+        new("Sofia", "Bulgaria", "1.3 M"), new("Plovdiv", "Bulgaria", "340 k"), new("Varna", "Bulgaria", "330 k"),
+        new("Berlin", "Germany", "3.7 M"), new("Munich", "Germany", "1.5 M"),
+        new("Oslo", "Norway", "700 k"), new("Bergen", "Norway", "290 k")
+    ];
+}

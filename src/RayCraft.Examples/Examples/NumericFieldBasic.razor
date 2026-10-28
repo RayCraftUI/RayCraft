@@ -1,0 +1,10 @@
+<div class="doc-stack">
+    <NumericField @bind-Value="_quantity" Label="Quantity" Min="0" Max="10" />
+    <NumericField @bind-Value="_price" Label="Price" Step="0.5" HelperText="Decimal values" />
+    <span>Quantity: @_quantity, price: @_price</span>
+</div>
+
+@code {
+    private int _quantity = 3;
+    private decimal _price = 9.5m;
+}

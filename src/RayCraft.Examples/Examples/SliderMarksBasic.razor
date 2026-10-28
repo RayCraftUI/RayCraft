@@ -1,0 +1,10 @@
+<div class="doc-stack">
+    <Slider @bind-Value="_volume" Min="0" Max="100" Step="5" ShowMarks="true" MarkStep="25" Label="Volume" />
+    <RangeSlider @bind-Low="_from" @bind-High="_to" Min="0" Max="24" Step="1" ShowMarks="true" MarkStep="6" Label="Opening hours" />
+</div>
+
+@code {
+    private double _volume = 40;
+    private double _from = 8;
+    private double _to = 18;
+}

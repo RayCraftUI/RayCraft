@@ -1,0 +1,37 @@
+<MenuBar Menus="_menus" Label="Document menu" OnPick="Picked" />
+<p>Last command: @_last</p>
+
+@code {
+    private string _last = "none";
+    private bool _grid = true;
+    private IReadOnlyList<MenuBarMenu> _menus = [];
+
+    protected override void OnInitialized() => _menus = Build();
+
+    private void Picked(MenuCommand command) => _last = command.Label ?? string.Empty;
+
+    private Task ToggleGrid()
+    {
+        _grid = !_grid;
+        _menus = Build();
+        return Task.CompletedTask;
+    }
+
+    private IReadOnlyList<MenuBarMenu> Build() =>
+    [
+        new("File",
+        [
+            new("New", Shortcut: "Ctrl+N"),
+            new("Open", Shortcut: "Ctrl+O"),
+            MenuCommand.Separator,
+            new("Export", Children: [new("As PDF"), new("As HTML")]),
+            new("Print", Disabled: true)
+        ]),
+        new("View",
+        [
+            new("Show grid", ToggleGrid, Checkable: true, Checked: _grid),
+            new("Zoom in", Icon: IconName.ZoomIn),
+            new("Zoom out", Icon: IconName.ZoomOut)
+        ])
+    ];
+}

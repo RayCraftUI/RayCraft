@@ -1,0 +1,7 @@
+<TreeView Items="SampleData.Folders" ChildrenSelector="@(f => f.Children)" ItemText="@(f => f.Name)"
+          @bind-SelectedItem="_selected" Label="Folders" />
+<p>Selected: @(_selected?.Name ?? "none") (use the arrow keys, Enter, Home and End)</p>
+
+@code {
+    private Folder? _selected;
+}

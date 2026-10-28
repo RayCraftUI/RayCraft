@@ -1,0 +1,17 @@
+<div class="doc-stack">
+    <TextField @bind-Value="_name" Label="Display name" />
+    <Stack Justify="flex-end">
+        <Button Variant="Variant.Outlined" OnClick="@(() => Context?.Cancel())">Cancel</Button>
+        <Button OnClick="@(() => Context?.Close(_name))">Save</Button>
+    </Stack>
+</div>
+
+@code {
+    private string? _name;
+
+    [CascadingParameter] public DialogContext? Context { get; set; }
+
+    [Parameter] public string? Name { get; set; }
+
+    protected override void OnInitialized() => _name = Name;
+}

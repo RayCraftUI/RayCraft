@@ -1,0 +1,23 @@
+<Stack Direction="StackDirection.Column" Align="flex-start">
+    <ButtonGroup Label="Actions">
+        <Button Variant="Variant.Outlined" StartIcon="IconName.Save">Save</Button>
+        <Button Variant="Variant.Outlined" StartIcon="IconName.Copy">Copy</Button>
+        <Button Variant="Variant.Outlined" StartIcon="IconName.Delete" Color="ButtonColor.Danger">Delete</Button>
+    </ButtonGroup>
+    <ButtonGroup Label="View">
+        @foreach (var view in _views)
+        {
+            <ToggleButton Pressed="_view == view" PressedChanged="@(_ => _view = view)">@view</ToggleButton>
+        }
+    </ButtonGroup>
+    <ButtonGroup Vertical="true" Label="Filled">
+        <Button>First</Button>
+        <Button>Second</Button>
+        <Button>Third</Button>
+    </ButtonGroup>
+</Stack>
+
+@code {
+    private readonly string[] _views = ["Day", "Week", "Month"];
+    private string _view = "Week";
+}

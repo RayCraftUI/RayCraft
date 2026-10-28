@@ -1,0 +1,25 @@
+<div class="doc-stack">
+    <CodeBlock Language="csharp" Title="Program.cs" ShowLineNumbers="true" Code="@_csharp" />
+    <CodeBlock Language="html" Code="@_html" />
+    <CodeBlock Language="json" Code="@_json" ShowCopy="false" />
+</div>
+
+@code {
+    private const string _csharp = """
+        // Counts words
+        public static int CountWords(string text)
+        {
+            var parts = text.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            return parts.Length > 0 ? parts.Length : 0;
+        }
+        """;
+
+    private const string _html = """
+        <button class="raycraft-btn" disabled>Save</button>
+        <!-- a comment -->
+        """;
+
+    private const string _json = """
+        { "name": "RayCraft", "version": 1.5, "flat": true, "tags": ["blazor", "sass"] }
+        """;
+}

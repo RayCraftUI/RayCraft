@@ -1,0 +1,19 @@
+<LoginForm OnSubmit="OnSubmit" ErrorMessage="@_error" Busy="_busy">
+    <Footer><Link Href="components/registerform">Create an account</Link></Footer>
+</LoginForm>
+<p>@_result</p>
+
+@code {
+    private string? _error;
+    private string _result = "";
+    private bool _busy;
+
+    private async Task OnSubmit(LoginModel model)
+    {
+        _busy = true;
+        await Task.Delay(500);
+        _busy = false;
+        _error = model.Password == "secret" ? null : "Wrong user name or password. Try the password \"secret\".";
+        _result = _error is null ? $"Signed in as {model.UserName}" : "";
+    }
+}

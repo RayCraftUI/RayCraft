@@ -1,0 +1,14 @@
+<div class="doc-stack" style="max-width:32rem">
+    <DateTimeRangePicker @bind-Value="_booking" Label="Booking period" />
+    <DateTimeRangePicker @bind-Value="_holiday" Label="Holiday (dates only)" IncludeTime="false" />
+    <span>Booking: @Show(_booking)</span>
+    <span>Holiday: @Show(_holiday)</span>
+</div>
+
+@code {
+    private DateTimeRange _booking;
+    private DateTimeRange _holiday;
+
+    private static string Show(DateTimeRange range) =>
+        range.Start is null ? "none" : $"{range.Start:g} - {(range.End is null ? "?" : range.End.Value.ToString("g"))}";
+}

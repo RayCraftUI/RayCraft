@@ -1,0 +1,14 @@
+<div class="doc-stack">
+    <MaskedInput @bind-Value="_phone" Label="Phone" Mask="+359 00 000 0000" HelperText="Digits only; the separators are added while you type." />
+    <MaskedInput @bind-Value="_plate" Label="Plate number (raw value)" Mask="aa 0000 aa" ReturnRaw="true" />
+    <MaskedInput @bind-Value="_card" Label="Card number (Luhn checked)" Preset="MaskPreset.CreditCard" />
+    <MaskedInput @bind-Value="_postcode" Label="Postcode" Mask="0000" Pattern="^[1-9]" PatternMessage="A postcode does not start with 0." />
+    <p>Phone: @(_phone ?? "-"), plate: @(_plate ?? "-")</p>
+</div>
+
+@code {
+    private string? _phone;
+    private string? _plate;
+    private string? _card;
+    private string? _postcode;
+}

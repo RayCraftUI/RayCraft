@@ -1,0 +1,64 @@
+@implements IDisposable
+@inject IRayCraftDrag Drag
+@inject IRayCraftSnackbar Snackbar
+
+<div class="doc-stack">
+    <div class="doc-row">
+        <TreeView Items="_folders" ChildrenSelector="@(folder => folder.Children)" ExpandAll="true" ItemText="@(folder => folder.Name)"
+                  ItemBadge="@(folder => folder.Unread > 0 ? folder.Unread.ToString() : null)" ItemBold="@(folder => folder.Unread > 0)"
+                  ContextMenuItems="MenuFor" CanDrop="@((folder, payload) => payload is string)" OnDrop="@((TreeDropEventArgs<Folder> drop) => OnDropAsync(drop))"
+                  @bind-SelectedItem="_selected" Label="Mail folders" />
+        <div>
+            <p>Drag a message onto a folder. Right-click a folder (or press Shift+F10) for its menu.</p>
+            <ul class="doc-list">
+                @foreach (var subject in _messages)
+                {
+                    var current = subject;
+                    <li><span draggable="true" @ondragstart="() => Drag.Begin(current)" @ondragend="() => Drag.End()">@subject</span></li>
+                }
+            </ul>
+            <p>@_log</p>
+        </div>
+    </div>
+</div>
+
+@code {
+    private sealed class Folder(string name, int unread, params Folder[] children)
+    {
+        public string Name { get; } = name;
+        public int Unread { get; set; } = unread;
+        public List<Folder> Children { get; } = children.ToList();
+    }
+
+    private readonly List<Folder> _folders =
+    [
+        new("Inbox", 3, new Folder("Invoices", 1), new Folder("Team", 0)),
+        new("Drafts", 0),
+        new("Archive", 0)
+    ];
+
+    private readonly string[] _messages = ["Quarterly invoice", "Team lunch on Friday", "Welcome to the team"];
+    private Folder? _selected;
+    private string _log = "Nothing moved yet.";
+
+    protected override void OnInitialized() => Drag.Changed += Refresh;
+
+    public void Dispose() => Drag.Changed -= Refresh;
+
+    private void Refresh() => InvokeAsync(StateHasChanged);
+
+    private Task OnDropAsync(TreeDropEventArgs<Folder> drop)
+    {
+        _log = $"\"{drop.Payload}\" moved to {drop.Target.Name}.";
+        drop.Target.Unread++;
+        return Task.CompletedTask;
+    }
+
+    private IReadOnlyList<MenuCommand> MenuFor(Folder folder) =>
+    [
+        new MenuCommand("New folder", () => { folder.Children.Add(new Folder("New folder", 0)); return Task.CompletedTask; }),
+        new MenuCommand("Mark all as read", () => { folder.Unread = 0; return Task.CompletedTask; }),
+        MenuCommand.Separator,
+        new MenuCommand("Empty", () => { Snackbar.Add($"{folder.Name} emptied"); return Task.CompletedTask; })
+    ];
+}

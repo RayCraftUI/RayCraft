@@ -7,12 +7,7 @@
     </header>
     <div class="site__body">
         <nav class="site__nav" aria-label="Controls">
-            <ul>
-                @foreach (var control in ControlCatalog.All)
-                {
-                    <li><NavLink href="@("/controls/" + control.Slug)">@control.Name</NavLink></li>
-                }
-            </ul>
+            <ControlFilter Compact InputId="nav-filter" />
         </nav>
         <main class="site__main">
             @Body

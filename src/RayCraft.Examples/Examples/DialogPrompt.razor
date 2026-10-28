@@ -1,0 +1,16 @@
+@inject IRayCraftDialogs Dialogs
+
+<Stack Align="center" Wrap="true">
+    <Button OnClick="Ask">Rename…</Button>
+    <span>Result: @_result</span>
+</Stack>
+
+@code {
+    private string _result = "-";
+
+    private async Task Ask()
+    {
+        var name = await Dialogs.PromptAsync("Rename report", "Reports are listed by this name.", "Quarterly report", label: "New name", required: true);
+        _result = name is null ? "cancelled" : $"renamed to \"{name}\"";
+    }
+}

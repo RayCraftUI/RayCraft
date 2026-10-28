@@ -1,0 +1,11 @@
+<Stack Direction="StackDirection.Column">
+    <Rating @bind-Value="_stars" Label="Product rating" />
+    <span>Rated: @_stars of 5</span>
+    <Rating @bind-Value="_fixed" ReadOnly Label="Read only" />
+</Stack>
+
+@code {
+    private int _stars = 3;
+    private int _fixed = 4;
+}
+

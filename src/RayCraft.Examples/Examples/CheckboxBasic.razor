@@ -1,0 +1,8 @@
+<div class="doc-stack">
+    <Checkbox @bind-Value="_agree" Label="I accept the terms" />
+    <span>Value: @_agree</span>
+</div>
+
+@code {
+    private bool _agree;
+}

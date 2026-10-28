@@ -1,0 +1,28 @@
+<div class="doc-stack">
+    <Button Variant="Variant.Outlined" Size="Size.Small" StartIcon="IconName.Add" OnClick="Add">New tab</Button>
+    <Tabs @bind-ActiveIndex="_index">
+        @foreach (var name in _tabs.ToList())
+        {
+            var current = name;
+            <TabPanel Title="@current" Closable="true" OnClose="@(() => Close(current))">Content of @current</TabPanel>
+        }
+    </Tabs>
+</div>
+
+@code {
+    private readonly List<string> _tabs = ["Inbox", "Drafts", "Sent"];
+    private int _index;
+    private int _counter = 1;
+
+    private void Add()
+    {
+        _tabs.Add($"Tab {_counter++}");
+        _index = _tabs.Count - 1;
+    }
+
+    private void Close(string name)
+    {
+        _tabs.Remove(name);
+        _index = Math.Min(_index, _tabs.Count - 1);
+    }
+}

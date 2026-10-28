@@ -1,0 +1,23 @@
+<FormLayout>
+    <FormLayoutGroup Legend="Contact" Description="Fields share the twelve columns of the layout.">
+        <FormLayoutItem Md="6"><TextField @bind-Value="_first" Label="First name" /></FormLayoutItem>
+        <FormLayoutItem Md="6"><TextField @bind-Value="_last" Label="Last name" /></FormLayoutItem>
+        <FormLayoutItem Md="8"><TextField @bind-Value="_email" Label="Email" HelperText="We never share it." /></FormLayoutItem>
+        <FormLayoutItem Md="4"><TextField @bind-Value="_phone" Label="Phone" /></FormLayoutItem>
+    </FormLayoutGroup>
+    <FormLayoutGroup Legend="Address">
+        <FormLayoutItem Span="12" Md="6"><TextField @bind-Value="_street" Label="Street" /></FormLayoutItem>
+        <FormLayoutItem Span="6" Md="3"><TextField @bind-Value="_city" Label="City" /></FormLayoutItem>
+        <FormLayoutItem Span="6" Md="3"><TextField @bind-Value="_zip" Label="Postal code" /></FormLayoutItem>
+    </FormLayoutGroup>
+</FormLayout>
+
+@code {
+    private string? _first = "Maria";
+    private string? _last = "Ivanova";
+    private string? _email;
+    private string? _phone;
+    private string? _street;
+    private string? _city;
+    private string? _zip;
+}

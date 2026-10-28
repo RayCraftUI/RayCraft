@@ -1,0 +1,17 @@
+<div class="doc-stack">
+    <Carousel Label="Highlights" @bind-ActiveIndex="_index">
+        <CarouselSlide><h3>Flat design</h3><p>Square corners and sober colors in both themes.</p></CarouselSlide>
+        <CarouselSlide><h3>Accessible</h3><p>Keyboard support and WCAG contrast.</p></CarouselSlide>
+        <CarouselSlide><h3>Localized</h3><p>English and Bulgarian built in.</p></CarouselSlide>
+    </Carousel>
+    <Carousel Label="Auto-advancing" AutoplayInterval="4000">
+        <CarouselSlide>First (changes every 4 s; pauses on hover, focus or with the pause button)</CarouselSlide>
+        <CarouselSlide>Second</CarouselSlide>
+        <CarouselSlide>Third</CarouselSlide>
+    </Carousel>
+    <span>Slide index: @_index</span>
+</div>
+
+@code {
+    private int _index;
+}

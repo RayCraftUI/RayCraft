@@ -1,0 +1,8 @@
+<div class="doc-stack">
+    <PercentField @bind-Value="_rate" Label="Discount" Decimals="1" />
+    <span>Stored value: @(_rate?.ToString("0.###") ?? "none")</span>
+</div>
+
+@code {
+    private double? _rate = 0.125;
+}

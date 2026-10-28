@@ -1,0 +1,25 @@
+@using System.ComponentModel.DataAnnotations
+
+<EditForm Model="_model" OnValidSubmit="Submit" FormName="signup">
+    <DataAnnotationsValidator />
+    <div class="doc-stack">
+        <TextField @bind-Value="_model.Email" Label="Email" />
+        <Button Type="submit">Sign up</Button>
+        @if (_done)
+        {
+            <Alert Severity="Severity.Success">Submitted: @_model.Email</Alert>
+        }
+    </div>
+</EditForm>
+
+@code {
+    private readonly SignUp _model = new();
+    private bool _done;
+    private void Submit() => _done = true;
+
+    private class SignUp
+    {
+        [Required, EmailAddress]
+        public string? Email { get; set; }
+    }
+}

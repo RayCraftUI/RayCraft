@@ -1,0 +1,8 @@
+<div class="doc-stack">
+    <WeekPicker @bind-Value="_week" Label="Week" />
+    <span>Week starts: @(_week?.ToString("D") ?? "none")</span>
+</div>
+
+@code {
+    private DateTime? _week;
+}

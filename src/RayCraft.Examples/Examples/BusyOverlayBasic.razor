@@ -1,0 +1,26 @@
+<Stack Direction="StackDirection.Column" Spacing="2">
+    <Button OnClick="Load">Reload</Button>
+    <BusyOverlay Busy="_busy" Label="Loading orders">
+        <Card>
+            <Descriptions>
+                <DescriptionItem Label="Orders">@_count</DescriptionItem>
+                <DescriptionItem Label="Updated">@_updated</DescriptionItem>
+            </Descriptions>
+        </Card>
+    </BusyOverlay>
+</Stack>
+
+@code {
+    private bool _busy;
+    private int _count = 128;
+    private string _updated = "never";
+
+    private async Task Load()
+    {
+        _busy = true;
+        await Task.Delay(1800);
+        _count += 7;
+        _updated = DateTime.Now.ToString("T");
+        _busy = false;
+    }
+}

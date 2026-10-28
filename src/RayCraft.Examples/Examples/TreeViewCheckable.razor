@@ -1,0 +1,7 @@
+<TreeView Items="SampleData.Folders" ChildrenSelector="@(f => f.Children)" ItemText="@(f => f.Name)" Checkable="true" ExpandAll="true"
+          @bind-CheckedItems="_checked" Label="Folders to back up" />
+<p>@_checked.Count() items checked (Space toggles the focused node; a parent shows a dash when only some children are checked).</p>
+
+@code {
+    private IEnumerable<Folder> _checked = Enumerable.Empty<Folder>();
+}

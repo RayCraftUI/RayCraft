@@ -1,0 +1,12 @@
+<Mention @bind-Value="_text" Label="Comment" Lines="3" Items="_people" OnMention="m => _last = m.Text" Placeholder="@("Type @ to mention someone")" />
+<p>Last mention: @(_last ?? "none")</p>
+
+@code {
+    private string? _text;
+    private string? _last;
+
+    private readonly MentionItem[] _people =
+    [
+        new("1", "Ivan Petrov"), new("2", "Maria Georgieva"), new("3", "Georgi Dimitrov"), new("4", "Elena Stoyanova"), new("5", "Nikolay Ivanov")
+    ];
+}

@@ -1,0 +1,11 @@
+<Tabs @bind-ActiveIndex="_tab">
+    <TabPanel Title="Overview">Overview content</TabPanel>
+    <TabPanel Title="Details">Details content</TabPanel>
+    <TabPanel Title="Disabled" Disabled>Never shown</TabPanel>
+    <TabPanel Title="History">History content</TabPanel>
+</Tabs>
+<p>Active tab index: @_tab (use ← → Home End on the keyboard)</p>
+
+@code {
+    private int _tab;
+}

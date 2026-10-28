@@ -1,0 +1,9 @@
+<div class="doc-stack">
+    <TransferList TItem="string" Items="_roles" @bind-Values="_chosen" Label="Roles" />
+    <span>Chosen: @(_chosen.Count == 0 ? "none" : string.Join(", ", _chosen))</span>
+</div>
+
+@code {
+    private readonly string[] _roles = ["Reader", "Editor", "Reviewer", "Publisher", "Administrator", "Auditor"];
+    private IReadOnlyCollection<string> _chosen = new List<string> { "Reader" };
+}

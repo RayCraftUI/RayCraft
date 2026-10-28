@@ -1,0 +1,6 @@
+<DateTimePicker @bind-Value="_when" Label="Meeting starts" />
+<p>Value: @(_when?.ToString("g") ?? "none")</p>
+
+@code {
+    private DateTime? _when = DateTime.Today.AddHours(9);
+}

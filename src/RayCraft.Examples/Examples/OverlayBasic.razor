@@ -1,0 +1,19 @@
+<div class="doc-stack">
+    <Button Variant="Variant.Outlined" OnClick="Run">Load for 2 seconds</Button>
+    <div style="position:relative;min-height:8rem" class="doc-demo-box">
+        Content that is covered while loading.
+        <Overlay Visible="_busy" Absolute="true"><Stack Align="center"><Spinner /><span>Loading…</span></Stack></Overlay>
+    </div>
+</div>
+
+@code {
+    private bool _busy;
+
+    private async Task Run()
+    {
+        _busy = true;
+        StateHasChanged();
+        await Task.Delay(2000);
+        _busy = false;
+    }
+}

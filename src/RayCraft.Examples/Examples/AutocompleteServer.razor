@@ -1,0 +1,15 @@
+<div class="doc-stack">
+    <Autocomplete @bind-Value="_city" ItemsProvider="SearchAsync" MinChars="2" DebounceMilliseconds="300" Label="City" Placeholder="Type two letters" />
+    <span>Selected: @(_city ?? "none")</span>
+</div>
+
+@code {
+    private string? _city;
+    private static readonly string[] Cities = ["Sofia", "Plovdiv", "Varna", "Burgas", "Ruse", "Stara Zagora", "Pleven", "Sliven", "Dobrich", "Shumen"];
+
+    private async Task<IEnumerable<string>> SearchAsync(string text, CancellationToken token)
+    {
+        await Task.Delay(400, token);
+        return Cities.Where(city => city.Contains(text, StringComparison.CurrentCultureIgnoreCase));
+    }
+}

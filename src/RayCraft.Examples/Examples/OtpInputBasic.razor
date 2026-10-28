@@ -1,0 +1,10 @@
+<div class="doc-stack">
+    <OtpInput @bind-Value="_code" Label="Verification code" Length="6" Completed="@(code => _done = code)" />
+    <OtpInput Label="PIN (hidden)" Length="4" Mask="true" />
+    <span>Code: @(_code ?? "") @(_done is null ? "" : "(complete)")</span>
+</div>
+
+@code {
+    private string? _code;
+    private string? _done;
+}

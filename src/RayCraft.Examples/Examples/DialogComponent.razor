@@ -1,0 +1,16 @@
+@inject IRayCraftDialogs Dialogs
+
+<Stack Align="center" Wrap="true">
+    <Button OnClick="Edit">Edit profile…</Button>
+    <span>Result: @_result</span>
+</Stack>
+
+@code {
+    private string _result = "-";
+
+    private async Task Edit()
+    {
+        var result = await Dialogs.ShowAsync<DialogProfileForm>("Edit profile", new Dictionary<string, object?> { ["Name"] = "Ada" });
+        _result = result.Canceled ? "cancelled" : $"saved as {result.GetData<string>()}";
+    }
+}

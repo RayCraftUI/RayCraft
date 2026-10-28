@@ -1,0 +1,16 @@
+<div class="doc-stack">
+    <TitleIndex TItem="string" Items="_names" OnItemClick="Pick" Label="Countries by first letter" />
+    <p>@(_picked is null ? "Choose a letter, then a name." : "You chose " + _picked + ".")</p>
+</div>
+
+@code {
+    private string? _picked;
+
+    private readonly string[] _names =
+    {
+        "Albania", "Austria", "Belgium", "Bulgaria", "Croatia", "Cyprus", "Denmark", "Estonia", "Finland", "France", "Germany", "Greece",
+        "Hungary", "Iceland", "Ireland", "Italy", "Latvia", "Lithuania", "Malta", "Norway", "Poland", "Portugal", "Romania", "Spain", "Sweden"
+    };
+
+    private void Pick(string name) => _picked = name;
+}

@@ -1,0 +1,16 @@
+<PricingTable Label="Plans" Plans="_plans" CurrencySymbol="€" @bind-Yearly="_yearly" OnSelect="Chosen" />
+<p>@_message</p>
+
+@code {
+    private bool _yearly;
+    private string _message = "Choose a plan.";
+
+    private readonly PricingPlan[] _plans =
+    [
+        new("Starter", 0, 0, [new("1 project"), new("Community support"), new("Custom domain", false)], "For trying things out.", PriceText: "Free", ButtonText: "Start free"),
+        new("Team", 29, 290, [new("20 projects"), new("Email support"), new("Custom domain"), new("Audit log", false)], "For small teams.", Featured: true, Badge: "Popular"),
+        new("Business", 79, 790, [new("Unlimited projects"), new("Priority support"), new("Custom domain"), new("Audit log")], "For companies with several teams.")
+    ];
+
+    private void Chosen(PricingPlan plan) => _message = $"Chosen: {plan.Name} ({(_yearly ? "yearly" : "monthly")})";
+}

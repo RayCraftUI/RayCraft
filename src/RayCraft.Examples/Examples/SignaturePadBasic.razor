@@ -1,0 +1,14 @@
+<div class="doc-stack">
+    <SignaturePad @bind-Value="_signature" Label="Sign here" />
+    @if (_signature is not null)
+    {
+        <div>
+            <div class="raycraft-text raycraft-text--caption">Captured image (PNG, @(_signature.Length / 1024) KB as text):</div>
+            <img src="@_signature" alt="Captured signature" style="max-width:12rem;border:1px solid var(--raycraft-border);background:var(--raycraft-qr-light)" />
+        </div>
+    }
+</div>
+
+@code {
+    private string? _signature;
+}

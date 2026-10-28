@@ -1,0 +1,14 @@
+<Stack Align="center" Wrap="true">
+    <SplitButton Label="Save" Icon="IconName.Save" OnClick="@(() => _last = "Save")">
+        <MenuItem Icon="IconName.Copy" OnClick="@(() => _last = "Save as copy")">Save as copy</MenuItem>
+        <MenuItem Icon="IconName.Download" OnClick="@(() => _last = "Export")">Export</MenuItem>
+    </SplitButton>
+    <SplitButton Label="Publish" Color="ButtonColor.Success" Variant="Variant.Outlined" OnClick="@(() => _last = "Publish")">
+        <MenuItem OnClick="@(() => _last = "Schedule")">Schedule</MenuItem>
+    </SplitButton>
+    <span>Last action: @_last</span>
+</Stack>
+
+@code {
+    private string _last = "none";
+}

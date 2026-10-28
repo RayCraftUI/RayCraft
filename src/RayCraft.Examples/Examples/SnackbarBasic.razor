@@ -1,0 +1,8 @@
+@inject IRayCraftSnackbar Snackbar
+
+<Stack Wrap>
+    <Button OnClick="@(() => Snackbar.Add("Just so you know"))">Info</Button>
+    <Button OnClick="@(() => Snackbar.Add("Saved", Severity.Success))">Success</Button>
+    <Button OnClick="@(() => Snackbar.Add("Disk almost full", Severity.Warning))">Warning</Button>
+    <Button OnClick="@(() => Snackbar.Add("Something failed", Severity.Error, durationMs: 0))">Error (stays)</Button>
+</Stack>

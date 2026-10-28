@@ -27,8 +27,8 @@ else
                 <tr>
                     <th scope="row"><code>@row.Name</code></th>
                     <td><code>@row.Type</code></td>
-                    <td>@row.Default</td>
-                    <td>@row.Description</td>
+                    <td>@(string.IsNullOrEmpty(row.Default) ? "–" : row.Default)</td>
+                    <td>@(string.IsNullOrEmpty(row.Description) ? "–" : row.Description)</td>
                 </tr>
             }
         </tbody>

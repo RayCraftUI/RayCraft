@@ -1,0 +1,53 @@
+<CommentThread Items="_comments" CurrentUser="Ivan Petrov" OnPost="Posted" OnDelete="Deleted" />
+
+@code {
+    private readonly List<CommentItem> _comments = Build();
+
+    private static List<CommentItem> Build()
+    {
+        var first = new CommentItem { Author = "Maria Georgieva", Text = "The new layout reads much better on a phone.", Time = DateTime.Now.AddHours(-3) };
+        var reply = new CommentItem { Author = "Ivan Petrov", Text = "Thanks. I will check the tablet width tomorrow.", Time = DateTime.Now.AddHours(-2) };
+        first.Replies.Add(reply);
+        return
+        [
+            first,
+            new CommentItem { Author = "Georgi Dimitrov", Text = "Can we keep the old colors for the print view?\nIt matters for the invoices.", Time = DateTime.Now.AddMinutes(-35) }
+        ];
+    }
+
+    private void Posted(CommentPost post)
+    {
+        var comment = new CommentItem { Author = "Ivan Petrov", Text = post.Text };
+
+        if (post.Parent is null)
+        {
+            _comments.Add(comment);
+        }
+        else
+        {
+            post.Parent.Replies.Add(comment);
+        }
+    }
+
+    private void Deleted(CommentItem item)
+    {
+        if (!_comments.Remove(item))
+        {
+            foreach (var comment in _comments)
+            {
+                Remove(comment, item);
+            }
+        }
+    }
+
+    private static void Remove(CommentItem parent, CommentItem item)
+    {
+        if (!parent.Replies.Remove(item))
+        {
+            foreach (var reply in parent.Replies)
+            {
+                Remove(reply, item);
+            }
+        }
+    }
+}

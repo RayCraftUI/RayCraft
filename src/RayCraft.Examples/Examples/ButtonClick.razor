@@ -1,0 +1,9 @@
+<div class="doc-row">
+    <Button OnClick="Increment">Clicked @_count times</Button>
+    <Button Variant="Variant.Outlined" Disabled>Disabled</Button>
+</div>
+
+@code {
+    private int _count;
+    private void Increment() => _count++;
+}

@@ -1,0 +1,11 @@
+<div class="doc-stack">
+    <ListBox TValue="string" Label="Single choice" Items="_cities" @bind-Value="_city" />
+    <ListBox TValue="string" Label="Several choices" Items="_cities" Multiple="true" @bind-Values="_visited" />
+    <span>City: @_city. Visited: @(_visited.Count == 0 ? "none" : string.Join(", ", _visited))</span>
+</div>
+
+@code {
+    private readonly string[] _cities = ["Sofia", "Plovdiv", "Varna", "Burgas", "Ruse"];
+    private string? _city = "Sofia";
+    private IReadOnlyCollection<string> _visited = new List<string>();
+}

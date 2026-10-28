@@ -1,0 +1,8 @@
+<div class="doc-stack">
+    <TimePicker @bind-Value="_time" Label="Meeting time" />
+    <span>Selected: @(_time?.ToString(@"hh\:mm") ?? "none")</span>
+</div>
+
+@code {
+    private TimeSpan? _time = new(9, 30, 0);
+}

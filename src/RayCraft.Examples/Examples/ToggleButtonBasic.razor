@@ -1,0 +1,11 @@
+<Stack Align="center" Wrap="true">
+    <ToggleButton @bind-Pressed="_bold" Icon="IconName.Edit">Bold</ToggleButton>
+    <ToggleButton @bind-Pressed="_pinned" Icon="IconName.Bookmark" Color="ButtonColor.Success">Pinned</ToggleButton>
+    <ToggleButton Disabled="true">Disabled</ToggleButton>
+    <span>Bold: @_bold, pinned: @_pinned</span>
+</Stack>
+
+@code {
+    private bool _bold;
+    private bool _pinned = true;
+}

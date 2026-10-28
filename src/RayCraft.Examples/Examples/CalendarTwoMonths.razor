@@ -1,0 +1,19 @@
+<Calendar RangeStart="_start" RangeEnd="_end" MonthCount="2" OnPick="Pick" />
+<p>Range: @(_start?.ToShortDateString() ?? "none") - @(_end?.ToShortDateString() ?? "none")</p>
+
+@code {
+    private DateTime? _start;
+    private DateTime? _end;
+
+    private void Pick(DateTime date)
+    {
+        if (_start is null || _end is not null || date < _start)
+        {
+            _start = date;
+            _end = null;
+            return;
+        }
+
+        _end = date;
+    }
+}

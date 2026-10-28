@@ -1,0 +1,5 @@
+<MarkdownEditor Label="Release notes" @bind-Value="_text" Rows="10" />
+
+@code {
+    private string? _text = "# Release notes\n\nThis version adds **file manager**, *diagrams* and a `QueryBuilder`.\n\n- Faster grids\n- New charts\n\n> Everything is escaped, links must be http, https or mailto.";
+}

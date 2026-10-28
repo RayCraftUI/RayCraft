@@ -1,0 +1,12 @@
+<div class="doc-stack">
+    <Panel Title="Always open">Plain panel content.</Panel>
+    <Panel Title="Collapsible" Collapsible="true" @bind-Expanded="_open">
+        <Actions><Button Variant="Variant.Text" Size="Size.Small" StartIcon="IconName.Refresh">Refresh</Button></Actions>
+        <ChildContent>Content that can be collapsed.</ChildContent>
+    </Panel>
+    <span>Expanded: @_open</span>
+</div>
+
+@code {
+    private bool _open = true;
+}

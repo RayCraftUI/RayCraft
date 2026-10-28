@@ -1,0 +1,9 @@
+<div class="doc-stack">
+    <MultiSelect TValue="string" Label="Tags" Items="_tags" @bind-Values="_selected" HelperText="Pick any number." />
+    <span>Selected: @(_selected.Count == 0 ? "none" : string.Join(", ", _selected))</span>
+</div>
+
+@code {
+    private readonly string[] _tags = ["Blazor", "SASS", "Accessibility", "Localization", "Charts", "Forms"];
+    private IReadOnlyCollection<string> _selected = new List<string> { "Blazor" };
+}

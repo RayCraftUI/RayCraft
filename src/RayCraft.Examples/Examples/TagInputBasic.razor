@@ -1,0 +1,8 @@
+<div class="doc-stack">
+    <TagInput @bind-Values="_tags" Label="Keywords" Placeholder="Type a keyword and press Enter or comma" HelperText="Backspace removes the last tag." MaxTags="6" />
+    <span>@_tags.Count tags: @string.Join(" | ", _tags)</span>
+</div>
+
+@code {
+    private IReadOnlyCollection<string> _tags = new List<string> { "blazor", "sass" };
+}

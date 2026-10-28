@@ -1,0 +1,30 @@
+<FormState Disabled="_saving">
+    <EditForm Model="_model" OnValidSubmit="Save">
+        <Stack Direction="StackDirection.Column" Spacing="2">
+            <TextField @bind-Value="_model.Name" Label="Name" />
+            <Switch @bind-Value="_model.Subscribe" Label="Subscribe" />
+            <Button Type="submit" Loading="_saving">Save</Button>
+        </Stack>
+    </EditForm>
+</FormState>
+<p>@_status</p>
+
+@code {
+    private readonly Person _model = new() { Name = "Ada" };
+    private bool _saving;
+    private string _status = "Press Save to lock all fields while saving.";
+
+    private async Task Save()
+    {
+        _saving = true;
+        await Task.Delay(1500);
+        _saving = false;
+        _status = $"Saved {_model.Name}";
+    }
+
+    private sealed class Person
+    {
+        public string? Name { get; set; }
+        public bool Subscribe { get; set; }
+    }
+}

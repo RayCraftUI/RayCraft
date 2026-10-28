@@ -1,0 +1,10 @@
+<div class="doc-stack">
+    <MoneyField @bind-Value="_price" Label="Price" Currency="EUR" />
+    <MoneyField @bind-Value="_budget" Label="Budget" Currency="USD" Decimals="0" Min="0" Max="1000000" />
+    <span>Stored values: @(_price?.ToString("0.00###") ?? "none"), @(_budget?.ToString("0.###") ?? "none")</span>
+</div>
+
+@code {
+    private decimal? _price = 1234.5m;
+    private decimal? _budget = 25000m;
+}

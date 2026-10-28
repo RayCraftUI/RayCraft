@@ -1,0 +1,18 @@
+<div class="doc-stack">
+    <Select TValue="string" @bind-Value="_native" Items="_cities" GroupBy="CountryOf" Label="Grouped (native list)" />
+    <Select TValue="string" @bind-Value="_searchable" Items="_cities" GroupBy="CountryOf" Searchable="true" Label="Searchable" Placeholder="Type to search" />
+    <span>Native: @_native, searchable: @(_searchable ?? "none")</span>
+</div>
+
+@code {
+    private string _native = "Sofia";
+    private string? _searchable;
+    private readonly string[] _cities = ["Sofia", "Plovdiv", "Varna", "Berlin", "Munich", "Hamburg", "Oslo", "Bergen"];
+
+    private string? CountryOf(string city) => city switch
+    {
+        "Sofia" or "Plovdiv" or "Varna" => "Bulgaria",
+        "Berlin" or "Munich" or "Hamburg" => "Germany",
+        _ => "Norway"
+    };
+}

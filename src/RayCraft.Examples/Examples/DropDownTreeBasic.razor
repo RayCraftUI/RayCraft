@@ -1,0 +1,7 @@
+<DropDownTree TItem="Folder" Items="SampleData.Folders" ChildrenSelector="@(f => f.Children)" ItemText="@(f => f.Name)" @bind-Value="_folder"
+              Label="Folder" Placeholder="Choose a folder" ExpandAll="true" />
+<p>Chosen: @(_folder?.Name ?? "none")</p>
+
+@code {
+    private Folder? _folder;
+}

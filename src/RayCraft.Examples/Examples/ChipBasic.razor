@@ -1,0 +1,12 @@
+<Stack Wrap Align="center">
+    @foreach (var tag in _tags)
+    {
+        <Chip OnDelete="@(() => _tags.Remove(tag))">@tag</Chip>
+    }
+    <Chip Severity="Severity.Success">Success</Chip>
+    <Chip Severity="Severity.Error" Variant="Variant.Outlined">Outlined</Chip>
+</Stack>
+
+@code {
+    private readonly List<string> _tags = ["Blazor", "SASS", ".NET 10"];
+}

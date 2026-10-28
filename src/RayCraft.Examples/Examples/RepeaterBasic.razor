@@ -1,0 +1,13 @@
+<Repeater Items="_people" PageSize="4" Columns="2">
+    <HeaderContent><strong>@_people.Count people</strong></HeaderContent>
+    <ItemTemplate Context="person">
+        <Card><strong>@person.Name</strong><br />@person.Role</Card>
+    </ItemTemplate>
+    <EmptyContent>Nobody here yet.</EmptyContent>
+</Repeater>
+
+@code {
+    private sealed record Person(string Name, string Role);
+
+    private readonly List<Person> _people = Enumerable.Range(1, 10).Select(i => new Person($"Person {i}", i % 2 == 0 ? "Designer" : "Developer")).ToList();
+}

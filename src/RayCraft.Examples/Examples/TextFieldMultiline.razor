@@ -1,0 +1,9 @@
+<div class="doc-stack">
+    <TextField @bind-Value="_notes" Label="Notes" Lines="4" MaxLength="120" ShowCounter="true" Placeholder="Write a few lines" />
+    <TextField @bind-Value="_password" Label="Password" Type="password" Revealable="true" HelperText="Use the eye button to check what you typed." />
+</div>
+
+@code {
+    private string? _notes;
+    private string? _password;
+}

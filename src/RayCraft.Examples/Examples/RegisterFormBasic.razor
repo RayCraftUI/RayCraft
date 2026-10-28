@@ -1,0 +1,6 @@
+<RegisterForm OnSubmit="@(m => _result = $"Registered {m.Name} <{m.Email}>")" />
+<p>@_result</p>
+
+@code {
+    private string _result = "";
+}

@@ -1,0 +1,21 @@
+<Stack Align="flex-start" Spacing="6" Wrap="true">
+    <List Bordered="true" Style="width:100%;max-width:18rem">
+        <ListItem Icon="IconName.Mail" Text="Inbox" SecondaryText="12 unread" />
+        <ListItem Icon="IconName.Send" Text="Sent" SecondaryText="Last sent today" />
+        <ListItem Icon="IconName.Archive" Text="Archive" Disabled="true" OnClick="@(() => { })" />
+        <ListItem Icon="IconName.Delete" Text="Trash">
+            <Action><Button Variant="Variant.Text" Size="Size.Small">Empty</Button></Action>
+        </ListItem>
+    </List>
+    <List Bordered="true" Dense="true" Style="width:100%;max-width:18rem">
+        @foreach (var folder in _folders)
+        {
+            <ListItem Text="@folder" Selected="_selected == folder" OnClick="@(() => _selected = folder)" />
+        }
+    </List>
+</Stack>
+
+@code {
+    private readonly string[] _folders = ["Projects", "Reports", "Invoices", "Contracts"];
+    private string _selected = "Reports";
+}

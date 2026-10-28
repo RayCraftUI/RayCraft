@@ -1,0 +1,14 @@
+<div class="doc-stack">
+    <SearchBox @bind-Value="_query" Label="Search (Enter to run)" Placeholder="Type and press Enter" OnSearch="OnSearch" />
+    <SearchBox @bind-Value="_live" Label="Search as you type" Placeholder="Filter" SearchOnInput="true" OnSearch="@(q => _hits++)" />
+    <span>Last search: @(_last ?? "none"), live events: @_hits</span>
+</div>
+
+@code {
+    private string? _query;
+    private string? _live;
+    private string? _last;
+    private int _hits;
+
+    private void OnSearch(string? query) => _last = query;
+}

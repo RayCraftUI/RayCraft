@@ -1,0 +1,12 @@
+<div class="doc-stack">
+    <MonthPicker @bind-Value="_month" Label="Reporting month" />
+    <MonthPicker @bind-Value="_limited" Label="This year only" MinMonth="_first" MaxMonth="_last" />
+    <span>Selected: @(_month?.ToString("MMMM yyyy") ?? "none")</span>
+</div>
+
+@code {
+    private DateTime? _month;
+    private DateTime? _limited;
+    private readonly DateTime _first = new(DateTime.Today.Year, 1, 1);
+    private readonly DateTime _last = new(DateTime.Today.Year, 12, 1);
+}

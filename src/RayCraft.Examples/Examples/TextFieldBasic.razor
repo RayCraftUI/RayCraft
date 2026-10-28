@@ -1,0 +1,9 @@
+<div class="doc-stack">
+    <TextField @bind-Value="_name" Label="Name" Placeholder="Your name" HelperText="@($"Hello, {_name}")" />
+    <TextField @bind-Value="_password" Label="Password" Type="password" />
+</div>
+
+@code {
+    private string? _name;
+    private string? _password;
+}

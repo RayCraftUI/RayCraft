@@ -2,6 +2,8 @@ namespace RayCraft.Examples.Docs;
 
 public record ExampleRef(string Title, Type Type);
 
+public record IndexEntry(string Category, string Name, IReadOnlyList<ExampleRef> Examples);
+
 public record ParameterRow(string Name, string Type, string Default, string Description);
 
 public record ControlDoc(
@@ -10,4 +12,5 @@ public record ControlDoc(
     string Lead,
     IReadOnlyList<ExampleRef> Examples,
     IReadOnlyList<ParameterRow> Parameters,
-    IReadOnlyList<string> Notes);
+    IReadOnlyList<string> Notes,
+    string Category = "");

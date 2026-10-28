@@ -1,0 +1,18 @@
+<div style="display:flex;justify-content:flex-end">
+    <NotificationCenter Items="_items" OnItemClick="Clicked" />
+</div>
+<p>@_message</p>
+
+@code {
+    private string _message = "Open the bell, read a notification or dismiss one.";
+
+    private readonly List<NotificationItem> _items =
+    [
+        new() { Title = "Deployment finished", Message = "Version 2.4 is live in production.", Severity = Severity.Success, Time = DateTime.Now.AddMinutes(-4) },
+        new() { Title = "Disk space is low", Message = "The backup volume is 91% full.", Severity = Severity.Warning, Time = DateTime.Now.AddHours(-2) },
+        new() { Title = "Payment failed", Message = "Invoice 10482 could not be charged.", Severity = Severity.Error, Time = DateTime.Now.AddHours(-5) },
+        new() { Title = "New teammate", Message = "Maria Georgieva joined the Design team.", Severity = Severity.Info, Time = DateTime.Now.AddDays(-1), Read = true }
+    ];
+
+    private void Clicked(NotificationItem item) => _message = $"Opened: {item.Title}";
+}

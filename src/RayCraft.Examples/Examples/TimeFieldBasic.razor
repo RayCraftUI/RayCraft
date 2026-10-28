@@ -1,0 +1,9 @@
+<div class="doc-stack">
+    <label for="time-field-demo">Start</label>
+    <TimeField id="time-field-demo" @bind-Value="_time" StepSeconds="900" />
+    <span>Selected: @(_time?.ToString(@"hh\:mm") ?? "none")</span>
+</div>
+
+@code {
+    private TimeSpan? _time = new(14, 0, 0);
+}

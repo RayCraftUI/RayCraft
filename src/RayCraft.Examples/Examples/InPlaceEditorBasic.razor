@@ -1,0 +1,9 @@
+<Stack Spacing="3">
+    <InPlaceEditor @bind-Value="_title" Label="Title" Placeholder="Click to add a title" />
+    <InPlaceEditor @bind-Value="_notes" Label="Notes" Lines="3" Placeholder="Click to add notes" HelperText="Ctrl+Enter saves, Escape cancels." />
+</Stack>
+
+@code {
+    private string? _title = "Quarterly report";
+    private string? _notes;
+}

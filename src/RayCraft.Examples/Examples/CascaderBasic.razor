@@ -1,0 +1,20 @@
+<Cascader Label="Location" @bind-Value="_place" Nodes="_nodes" Placeholder="Choose a city" />
+<p>Chosen: @(_place ?? "none")</p>
+
+@code {
+    private string? _place;
+
+    private readonly CascaderNode[] _nodes =
+    [
+        new("bg", "Bulgaria",
+            new CascaderNode("bg-sof", "Sofia", new CascaderNode("sofia", "Sofia"), new CascaderNode("pernik", "Pernik")),
+            new CascaderNode("bg-plv", "Plovdiv", new CascaderNode("plovdiv", "Plovdiv"), new CascaderNode("asenovgrad", "Asenovgrad")),
+            new CascaderNode("bg-var", "Varna", new CascaderNode("varna", "Varna"))),
+        new("de", "Germany",
+            new CascaderNode("de-be", "Berlin", new CascaderNode("berlin", "Berlin")),
+            new CascaderNode("de-by", "Bavaria", new CascaderNode("munich", "Munich"), new CascaderNode("nuremberg", "Nuremberg"))),
+        new("gr", "Greece",
+            new CascaderNode("athens", "Athens"),
+            new CascaderNode("thessaloniki", "Thessaloniki"))
+    ];
+}

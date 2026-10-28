@@ -1,0 +1,12 @@
+<Button OnClick="() => _open = true">Open drawer</Button>
+
+<Drawer @bind-Open="_open" Title="Navigation">
+    <Stack Direction="StackDirection.Column" Spacing="1">
+        <Button Variant="Variant.Text">Dashboard</Button>
+        <Button Variant="Variant.Text">Settings</Button>
+    </Stack>
+</Drawer>
+
+@code {
+    private bool _open;
+}

@@ -1,0 +1,11 @@
+<Hotkey Keys="alt+k" OnPressed="@(() => _count++)" />
+<Hotkey Keys="mod+shift+l" OnPressed="@(() => _toggled = !_toggled)" />
+
+<Stack Align="center">
+    <span>Press <kbd>Alt</kbd>+<kbd>K</kbd> (count: @_count) or <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>L</kbd> (@(_toggled ? "on" : "off")).</span>
+</Stack>
+
+@code {
+    private int _count;
+    private bool _toggled;
+}

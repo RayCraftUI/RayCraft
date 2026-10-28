@@ -1,0 +1,10 @@
+<Calendar MarkedDays="_marked" IsDayDisabled="@(day => day.DayOfWeek == DayOfWeek.Sunday)" DayTitle="Title" HighlightWeekends="true" OnPick="@(day => _last = day)" />
+<p>Picked: @(_last?.ToString("D") ?? "none"). Marked days have events; Sundays are not available.</p>
+
+@code {
+    private DateTime? _last;
+    private readonly DateTime _first = new(DateTime.Today.Year, DateTime.Today.Month, 1);
+    private IEnumerable<DateTime> _marked => [_first.AddDays(3), _first.AddDays(9), _first.AddDays(16), _first.AddDays(22)];
+
+    private string? Title(DateTime day) => _marked.Contains(day.Date) ? "Has events" : null;
+}

@@ -1,0 +1,10 @@
+<div class="doc-stack">
+    <TimeSpanPicker @bind-Value="_duration" Label="Duration (hours and minutes)" />
+    <TimeSpanPicker @bind-Value="_long" Label="Duration with days and seconds" ShowDays="true" ShowSeconds="true" />
+    <span>@(_duration?.ToString() ?? "none") / @(_long?.ToString() ?? "none")</span>
+</div>
+
+@code {
+    private TimeSpan? _duration = TimeSpan.FromMinutes(90);
+    private TimeSpan? _long;
+}

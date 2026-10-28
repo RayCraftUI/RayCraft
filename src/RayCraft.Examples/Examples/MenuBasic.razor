@@ -1,0 +1,10 @@
+<Menu Label="Actions">
+    <MenuItem Icon="IconName.Edit" OnClick="@(() => _last = "Edit")">Edit</MenuItem>
+    <MenuItem Icon="IconName.Copy" OnClick="@(() => _last = "Duplicate")">Duplicate</MenuItem>
+    <MenuItem Icon="IconName.Delete" Disabled>Delete (disabled)</MenuItem>
+</Menu>
+<p>Last action: @(_last ?? "none")</p>
+
+@code {
+    private string? _last;
+}

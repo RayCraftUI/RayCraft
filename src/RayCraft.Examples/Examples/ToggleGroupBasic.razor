@@ -1,0 +1,12 @@
+<div class="doc-stack">
+    <ToggleGroup TValue="string" Label="Alignment (one)" Items="_alignments" @bind-Value="_alignment" />
+    <ToggleGroup TValue="string" Label="Formatting (several)" Items="_styles" Multiple="true" @bind-Values="_selected" Size="Size.Small" />
+    <span>@_alignment; @string.Join(", ", _selected)</span>
+</div>
+
+@code {
+    private readonly string[] _alignments = ["Left", "Center", "Right"];
+    private readonly string[] _styles = ["Bold", "Italic", "Underline"];
+    private string _alignment = "Left";
+    private IReadOnlyCollection<string> _selected = new List<string> { "Bold" };
+}

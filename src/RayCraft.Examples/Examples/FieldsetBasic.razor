@@ -1,0 +1,13 @@
+<Fieldset Legend="Contact details" Disabled="_locked">
+    <Stack Direction="StackDirection.Column">
+        <TextField @bind-Value="_name" Label="Name" />
+        <TextField @bind-Value="_email" Label="Email" Type="email" />
+    </Stack>
+</Fieldset>
+<Checkbox @bind-Value="_locked" Label="Disable the whole group" />
+
+@code {
+    private string? _name = "Ada";
+    private string? _email;
+    private bool _locked;
+}

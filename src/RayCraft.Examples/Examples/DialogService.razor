@@ -1,0 +1,30 @@
+@inject IRayCraftDialogs Dialogs
+
+<Stack Align="center" Wrap="true">
+    <Button OnClick="Ask">Confirm…</Button>
+    <Button Variant="Variant.Outlined" OnClick="Tell">Alert…</Button>
+    <Button Color="ButtonColor.Danger" OnClick="Remove">Delete…</Button>
+    <span>Result: @_result</span>
+</Stack>
+
+@code {
+    private string _result = "-";
+
+    private async Task Ask()
+    {
+        var ok = await Dialogs.ConfirmAsync("Publish", "Publish this page now?");
+        _result = ok ? "confirmed" : "cancelled";
+    }
+
+    private async Task Remove()
+    {
+        var ok = await Dialogs.ConfirmAsync("Delete report", "This cannot be undone.", "Delete", severity: Severity.Error);
+        _result = ok ? "deleted" : "kept";
+    }
+
+    private async Task Tell()
+    {
+        await Dialogs.AlertAsync("Saved", "Your changes were saved.");
+        _result = "alert closed";
+    }
+}

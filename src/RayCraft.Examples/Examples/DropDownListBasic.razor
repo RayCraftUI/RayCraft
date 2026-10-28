@@ -1,0 +1,7 @@
+<DropDownList TItem="string" Label="City (100,000 entries)" Items="_cities" @bind-Value="_city" Placeholder="Type to search" />
+<p>Chosen: @(_city ?? "none")</p>
+
+@code {
+    private readonly List<string> _cities = Enumerable.Range(1, 100000).Select(n => $"City {n:D6}").ToList();
+    private string? _city;
+}

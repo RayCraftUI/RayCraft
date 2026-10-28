@@ -1,0 +1,20 @@
+<div style="display:flex;min-height:18rem;border:1px solid var(--raycraft-border)">
+    <Drawer @bind-Open="_open" Mini="true" Collapsible="true" Temporary="false" Title="Navigation">
+        <NavMenu Label="Sections">
+            <NavItem Href="components/drawer" Icon="IconName.Home" Tooltip="Home">Home</NavItem>
+            <NavItem Href="components/datagrid" Icon="IconName.Table" Tooltip="Tables">Tables</NavItem>
+            <NavItem Href="components/linechart" Icon="IconName.ChartLine" Tooltip="Reports">Reports</NavItem>
+            <NavGroup Title="Settings" Icon="IconName.Settings" Expanded="true">
+                <NavItem Href="components/button" Icon="IconName.User" Tooltip="Profile">Profile</NavItem>
+                <NavItem Href="components/textfield" Icon="IconName.Lock" Tooltip="Security">Security</NavItem>
+            </NavGroup>
+        </NavMenu>
+    </Drawer>
+    <div style="flex:1;padding:1em">
+        <p>The drawer is @(_open ? "showing icons with text" : "showing icons only"). The button in its header switches between the two.</p>
+    </div>
+</div>
+
+@code {
+    private bool _open = true;
+}

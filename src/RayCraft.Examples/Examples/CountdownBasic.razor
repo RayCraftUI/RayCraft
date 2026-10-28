@@ -1,0 +1,11 @@
+<div class="doc-stack">
+    <Countdown Target="_target" Label="Time until the event" OnFinished="@(() => _finished = true)" />
+    <Countdown Target="_soon" ShowDays="false" Label="Short countdown" OnFinished="@(() => _finished = true)" />
+    <span>@(_finished ? "A countdown finished." : "Counting down…")</span>
+</div>
+
+@code {
+    private readonly DateTimeOffset _target = DateTimeOffset.Now.AddDays(2).AddHours(3);
+    private readonly DateTimeOffset _soon = DateTimeOffset.Now.AddSeconds(20);
+    private bool _finished;
+}

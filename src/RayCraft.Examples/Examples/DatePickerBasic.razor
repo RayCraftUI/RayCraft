@@ -1,0 +1,12 @@
+<div class="doc-stack">
+    <DatePicker @bind-Value="_date" Label="Start date" />
+    <DatePicker @bind-Value="_limited" Label="Within this month" MinDate="_first" MaxDate="_last" />
+    <span>Selected: @(_date?.ToLongDateString() ?? "none")</span>
+</div>
+
+@code {
+    private DateTime? _date;
+    private DateTime? _limited;
+    private readonly DateTime _first = new(DateTime.Today.Year, DateTime.Today.Month, 1);
+    private DateTime _last => _first.AddMonths(1).AddDays(-1);
+}

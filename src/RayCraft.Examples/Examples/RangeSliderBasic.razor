@@ -1,0 +1,9 @@
+<div class="doc-stack">
+    <RangeSlider @bind-Low="_low" @bind-High="_high" Label="Price range" Min="0" Max="1000" Step="10" />
+    <span>From @_low to @_high</span>
+</div>
+
+@code {
+    private double _low = 200;
+    private double _high = 700;
+}

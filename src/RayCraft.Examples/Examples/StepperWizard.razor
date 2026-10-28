@@ -1,0 +1,36 @@
+<Stepper @bind-ActiveIndex="_step" AllowJumpBack="true" OnCancel="Cancel" OnFinish="Finish">
+    <StepperStep Title="Company" Validate="CheckCompany">
+        <TextField @bind-Value="_company" Label="Company name" HelperText="@_error" />
+    </StepperStep>
+    <StepperStep Title="Plan">
+        <Select @bind-Value="_plan" Items="_plans" Label="Plan" />
+    </StepperStep>
+    <StepperStep Title="Confirm">
+        Create an account for @_company on the @_plan plan.
+    </StepperStep>
+</Stepper>
+<p>@_message</p>
+
+@code {
+    private int _step;
+    private string? _company;
+    private string? _error;
+    private string _plan = "Team";
+    private string _message = "Fill in the steps. Finished steps can be reopened from the header.";
+    private readonly string[] _plans = ["Free", "Team", "Enterprise"];
+
+    private Task<bool> CheckCompany()
+    {
+        _error = string.IsNullOrWhiteSpace(_company) ? "Enter the company name to continue." : null;
+        return Task.FromResult(_error is null);
+    }
+
+    private void Cancel()
+    {
+        _step = 0;
+        _company = null;
+        _message = "Cancelled.";
+    }
+
+    private void Finish() => _message = $"Created {_company} ({_plan}).";
+}

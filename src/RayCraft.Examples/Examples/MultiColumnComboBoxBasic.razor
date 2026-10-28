@@ -1,0 +1,13 @@
+<MultiColumnComboBox TItem="Person" Items="SampleData.People" Columns="_columns" ItemText="@(p => p.Name)" @bind-Value="_person" Label="Employee" Placeholder="Search by any column" />
+<p>Chosen: @(_person?.Name ?? "none")</p>
+
+@code {
+    private Person? _person;
+
+    private readonly IReadOnlyList<ComboColumn<Person>> _columns =
+    [
+        new("Name", p => p.Name, "10rem"),
+        new("Department", p => p.Department, "8rem"),
+        new("Age", p => p.Age, "4rem")
+    ];
+}

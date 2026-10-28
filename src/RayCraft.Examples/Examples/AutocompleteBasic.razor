@@ -1,0 +1,9 @@
+<div class="doc-stack">
+    <Autocomplete @bind-Value="_country" Items="_countries" Label="Country" Placeholder="Type to search" />
+    <span>Selected: @(_country ?? "none")</span>
+</div>
+
+@code {
+    private string? _country;
+    private readonly string[] _countries = ["Bulgaria", "Belgium", "Brazil", "Norway", "Sweden", "Denmark", "Finland", "Germany", "France", "Spain"];
+}

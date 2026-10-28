@@ -1,0 +1,21 @@
+<FormLayout LabelPosition="FormLabelPosition.Start" Spacing="3">
+    <FormLayoutItem Label="Name" HelperText="As on your ID.">
+        <TextField @bind-Value="_name" />
+    </FormLayoutItem>
+    <FormLayoutItem Label="Email">
+        <TextField @bind-Value="_email" Type="email" />
+    </FormLayoutItem>
+    <FormLayoutItem Label="Notes">
+        <TextField @bind-Value="_notes" Lines="3" />
+    </FormLayoutItem>
+    <FormLayoutItem Label="Subscribe">
+        <Switch @bind-Value="_subscribe" Label="Send me the newsletter" />
+    </FormLayoutItem>
+</FormLayout>
+
+@code {
+    private string? _name;
+    private string? _email;
+    private string? _notes;
+    private bool _subscribe = true;
+}

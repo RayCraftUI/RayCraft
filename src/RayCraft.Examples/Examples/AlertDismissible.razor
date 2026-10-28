@@ -1,0 +1,13 @@
+<Stack Direction="StackDirection.Column" Spacing="3">
+    <Alert Severity="Severity.Success" Dismissible>Your changes were saved.</Alert>
+    <Alert Severity="Severity.Warning" Dismissible @bind-Visible="_visible">This notice reports back when it is closed.</Alert>
+    <Alert Severity="Severity.Error" ShowIcon="false">An alert without an icon.</Alert>
+    <Stack Align="center">
+        <Button Variant="Variant.Outlined" OnClick="() => _visible = true" Disabled="_visible">Show the warning again</Button>
+        <span>Warning visible: @_visible</span>
+    </Stack>
+</Stack>
+
+@code {
+    private bool _visible = true;
+}

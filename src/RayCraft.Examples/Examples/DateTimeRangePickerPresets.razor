@@ -1,0 +1,8 @@
+<div class="doc-stack">
+    <DateTimeRangePicker @bind-Value="_range" ShowPresets="true" IncludeTime="false" Label="Period" />
+    <span>@(_range.Start?.ToString("d") ?? "–") to @(_range.End?.ToString("d") ?? "–")</span>
+</div>
+
+@code {
+    private DateTimeRange _range;
+}

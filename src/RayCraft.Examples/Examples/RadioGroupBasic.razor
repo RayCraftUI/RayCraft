@@ -1,0 +1,15 @@
+<div class="doc-stack">
+    <RadioGroup @bind-Value="_plan" Label="Plan" Items="_plans" HelperText="Billed monthly." />
+    <RadioGroup @bind-Value="_size" Label="Size (row, with Radio children)" Direction="StackDirection.Row">
+        <Radio Value="Size.Small" Label="Small" />
+        <Radio Value="Size.Medium" Label="Medium" />
+        <Radio Value="Size.Large" Label="Large" />
+    </RadioGroup>
+    <span>Plan: @_plan, size: @_size</span>
+</div>
+
+@code {
+    private readonly string[] _plans = ["Free", "Team", "Enterprise"];
+    private string _plan = "Team";
+    private Size _size = Size.Medium;
+}

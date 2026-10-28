@@ -1,0 +1,6 @@
+<ColorPalette @bind-Value="_color" Label="Accent color" />
+<p>Chosen: @(_color ?? "none") (arrow keys move and choose)</p>
+
+@code {
+    private string? _color = "#003399";
+}

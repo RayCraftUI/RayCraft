@@ -1,0 +1,18 @@
+<textarea @ref="_area" class="raycraft-field__input" rows="4" aria-label="Notes" @bind="_text" @bind:event="oninput"></textarea>
+
+<TextContextMenu Target="@(() => _area)" ItemsProvider="Items" />
+
+@code {
+    private ElementReference _area;
+    private string _text = "Right-click the text, or press Shift+F10 inside it.";
+
+    private IReadOnlyList<MenuCommand> Items(TextContextInfo info) =>
+    [
+        new("Insert today", () =>
+        {
+            _text += " " + DateTime.Today.ToString("d");
+            StateHasChanged();
+            return Task.CompletedTask;
+        }, Icon: IconName.Add)
+    ];
+}

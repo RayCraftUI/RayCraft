@@ -1,0 +1,17 @@
+<Menu Label="MP Maria Petrova" AlignEnd="true">
+    <Trigger>
+        <Avatar Text="Maria Petrova" Size="Size.Small" />
+        <span>Maria Petrova</span>
+        <Icon Name="IconName.ChevronDown" />
+    </Trigger>
+    <ChildContent>
+        <MenuItem Icon="IconName.User" OnClick="@(() => _last = "My profile")">My profile</MenuItem>
+        <MenuDivider />
+        <MenuItem Icon="IconName.Logout" OnClick="@(() => _last = "Sign out")">Sign out</MenuItem>
+    </ChildContent>
+</Menu>
+<p>Last action: @(_last ?? "none")</p>
+
+@code {
+    private string? _last;
+}

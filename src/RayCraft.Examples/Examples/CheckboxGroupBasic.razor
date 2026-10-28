@@ -1,0 +1,9 @@
+<div class="doc-stack">
+    <CheckboxGroup TValue="string" Label="Notify me by" Items="_channels" @bind-Values="_selected" ShowSelectAll="true" ItemDisabled="@(channel => channel == "Phone")" HelperText="Phone is fixed by your administrator." />
+    <span>Selected: @(_selected.Count == 0 ? "none" : string.Join(", ", _selected))</span>
+</div>
+
+@code {
+    private readonly string[] _channels = { "Email", "SMS", "Push", "Phone" };
+    private IReadOnlyCollection<string> _selected = new[] { "Email" };
+}

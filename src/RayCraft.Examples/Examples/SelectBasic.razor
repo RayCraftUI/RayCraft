@@ -1,0 +1,9 @@
+<div class="doc-stack">
+    <Select @bind-Value="_fruit" Items="_fruits" Label="Fruit" />
+    <span>Selected: @_fruit</span>
+</div>
+
+@code {
+    private string _fruit = "Apple";
+    private readonly string[] _fruits = ["Apple", "Banana", "Cherry"];
+}

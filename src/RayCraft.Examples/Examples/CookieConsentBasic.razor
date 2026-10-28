@@ -1,0 +1,23 @@
+@inject IRayCraftStorage Storage
+
+<CookieConsent @ref="_consent" PolicyHref="#privacy" OnConsent="Decided" />
+<Button Variant="Variant.Outlined" OnClick="Reopen">Change cookie settings</Button>
+<Button Variant="Variant.Text" OnClick="Forget">Forget my choice</Button>
+<p>@_message</p>
+
+@code {
+    private CookieConsent? _consent;
+    private string _message = "No decision yet.";
+
+    private void Decided(IReadOnlyDictionary<string, bool> choices) =>
+        _message = "Allowed: " + string.Join(", ", choices.Where(pair => pair.Value).Select(pair => pair.Key));
+
+    private void Reopen() => _consent?.Reopen();
+
+    private async Task Forget()
+    {
+        await Storage.Local.RemoveAsync("raycraft-consent");
+        _consent?.Reopen();
+        _message = "The stored choice was removed.";
+    }
+}

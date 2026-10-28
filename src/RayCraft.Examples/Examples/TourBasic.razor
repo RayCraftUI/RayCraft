@@ -1,0 +1,23 @@
+<div class="doc-stack">
+    <Stack Align="center">
+        <Button id="tour-primary" StartIcon="IconName.Save">Save</Button>
+        <Button id="tour-secondary" Variant="Variant.Outlined">Cancel</Button>
+        <TextField id="tour-field" Label="Name" @bind-Value="_name" />
+    </Stack>
+    <Button Variant="Variant.Outlined" OnClick="@(() => _open = true)">Start tour</Button>
+</div>
+<Tour Steps="_steps" @bind-Open="_open" @bind-ActiveIndex="_index" />
+
+@code {
+    private bool _open;
+    private int _index;
+    private string? _name;
+
+    private readonly TourStep[] _steps =
+    [
+        new("#tour-field", "Enter a name", "Start by typing a name for the item."),
+        new("#tour-primary", "Save your work", "This button stores the item."),
+        new("#tour-secondary", "Changed your mind?", "Cancel discards the changes."),
+        new("#does-not-exist", "Centered step", "When no element matches, the step is shown in the middle of the screen.")
+    ];
+}

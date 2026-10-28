@@ -1,0 +1,33 @@
+<div class="doc-stack">
+    <TextField @bind-Value="_source" Label="Markdown" Lines="12" />
+    <Markdown Source="@_source" />
+</div>
+
+@code {
+    private string? _source = """
+        # Release notes
+
+        RayCraft is **flat**, _fast_ and `accessible`. See the [docs](https://learn.microsoft.com/aspnet/core/blazor).
+
+        ## What changed
+
+        - New components
+          - Markdown
+          - QrCode
+        - Faster charts
+
+        1. Install
+        2. Build
+
+        > Tip: all HTML is escaped.
+
+        | Name | Status |
+        | --- | --- |
+        | Markdown | done |
+        | QrCode | done |
+
+        ```csharp
+        var x = 1;
+        ```
+        """.ReplaceLineEndings("\n");
+}

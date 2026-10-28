@@ -1,0 +1,13 @@
+<div class="doc-stack">
+    <Select @bind-Value="_country" Items="_countries" ItemText="c => c.Name" Label="Country" />
+    <span>Code: @_country.Code</span>
+</div>
+
+@code {
+    private record Country(string Code, string Name);
+
+    private readonly Country[] _countries = [new("BG", "Bulgaria"), new("NO", "Norway"), new("US", "United States")];
+    private Country _country = default!;
+
+    protected override void OnInitialized() => _country = _countries[0];
+}

@@ -1,0 +1,11 @@
+<BreakpointObserver>
+    <p>Current breakpoint: <strong>@context</strong> (resize the window to see it change).</p>
+    @if (context >= Breakpoint.Lg)
+    {
+        <Alert Severity="Severity.Info">Wide layout: the sidebar is shown.</Alert>
+    }
+    else
+    {
+        <Alert Severity="Severity.Warning">Narrow layout: the sidebar is hidden.</Alert>
+    }
+</BreakpointObserver>

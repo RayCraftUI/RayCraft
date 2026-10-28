@@ -1,0 +1,12 @@
+<Stack Direction="StackDirection.Column" Align="flex-start">
+    <AvatarGroup Items="_people" Label="Project members" />
+    <AvatarGroup Items="_people" Max="2" Size="Size.Small" Label="Project members (short)" />
+    <AvatarGroup Items="_people.Take(3)" Size="Size.Large" Label="Three members" />
+</Stack>
+
+@code {
+    private readonly AvatarItem[] _people =
+    [
+        new("Ada Lovelace"), new("Grace Hopper"), new("Linus Torvalds"), new("Margaret Hamilton"), new("Alan Turing"), new("Barbara Liskov")
+    ];
+}

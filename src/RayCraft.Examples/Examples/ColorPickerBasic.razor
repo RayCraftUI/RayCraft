@@ -1,0 +1,10 @@
+<div class="doc-stack">
+    <ColorPicker @bind-Value="_color" Label="Brand color" Presets="_presets" />
+    <div style="height:2rem;background-color:@(_color ?? "transparent");border:1px solid var(--raycraft-border)"></div>
+    <span>Value: @(_color ?? "none")</span>
+</div>
+
+@code {
+    private string? _color = "#0066CC";
+    private readonly string[] _presets = ["#0066CC", "#006600", "#CC6600", "#CC0000", "#663399", "#666666"];
+}
