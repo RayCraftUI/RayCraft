@@ -1,0 +1,25 @@
+<div class="stack">
+    <FormBuilder Fields="_fields" Values="_values" OnSubmit="Submitted" SubmitText="Register" />
+    <pre class="result" tabindex="0"><code>@_result</code></pre>
+</div>
+
+@code {
+    private string _result = "Submit the form to see the values.";
+    private readonly Dictionary<string, object?> _values = new() { ["newsletter"] = true };
+
+    private readonly FormField[] _fields =
+    [
+        new("name", "Full name", Required: true, Placeholder: "Ada Lovelace"),
+        new("email", "Email", FormFieldKind.Email, Required: true, Help: "We never share it."),
+        new("age", "Age", FormFieldKind.Number, Min: 18, Max: 120),
+        new("birth", "Date of birth", FormFieldKind.Date),
+        new("country", "Country", FormFieldKind.Select, Options: ["Bulgaria", "Germany", "Norway"], Placeholder: "Choose…", Required: true),
+        new("plan", "Plan", FormFieldKind.Radio, Options: ["Free", "Team", "Enterprise"]),
+        new("notes", "Notes", FormFieldKind.TextArea, Lines: 3),
+        new("newsletter", "Send me the newsletter", FormFieldKind.Switch),
+        new("terms", "I accept the terms", FormFieldKind.Checkbox, Required: true)
+    ];
+
+    private void Submitted(IReadOnlyDictionary<string, object?> values) =>
+        _result = string.Join("\n", values.Select(pair => $"{pair.Key} = {pair.Value}"));
+}

@@ -1,0 +1,16 @@
+@page "/"
+
+<PageTitle>RayCraft examples</PageTitle>
+
+<h1>RayCraft examples</h1>
+<p>Runnable examples for the free controls of RayCraft.Blazor. Every page has a live example with its source, the parameters, and a note on how it is meant to be used. The code of the library is not in this repository; it comes from the NuGet package.</p>
+
+<ul class="control-list">
+    @foreach (var control in ControlCatalog.All)
+    {
+        <li>
+            <a href="@("/controls/" + control.Slug)">@control.Name</a>
+            <span>@control.Lead</span>
+        </li>
+    }
+</ul>

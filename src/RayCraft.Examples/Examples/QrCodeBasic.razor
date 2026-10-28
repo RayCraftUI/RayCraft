@@ -1,0 +1,8 @@
+<div class="stack">
+    <TextField @bind-Value="_text" Label="Text or address" MaxLength="200" ShowCounter="true" />
+    <QrCode Value="@(_text ?? string.Empty)" Label="@("QR code for " + _text)" />
+</div>
+
+@code {
+    private string? _text = "https://learn.microsoft.com/aspnet/core/blazor";
+}

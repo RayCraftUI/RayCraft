@@ -1,0 +1,15 @@
+<div class="stack">
+    <Splitter @bind-Size="_size" PersistKey="examples-splitter" Style="height:12rem">
+        <First>Left pane. Drag the bar or focus it and use the arrow keys.</First>
+        <Second>Right pane</Second>
+    </Splitter>
+    <Splitter Vertical="true" Size="40" Style="height:14rem">
+        <First>Top pane</First>
+        <Second>Bottom pane</Second>
+    </Splitter>
+    <span>Left pane: @_size.ToString("0.#")%</span>
+</div>
+
+@code {
+    private double _size = 35;
+}

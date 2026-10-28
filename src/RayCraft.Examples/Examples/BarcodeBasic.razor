@@ -1,0 +1,12 @@
+<div class="stack">
+    <TextField @bind-Value="_text" Label="Code 128 text" MaxLength="40" />
+    <Barcode Value="@(_text ?? string.Empty)" />
+    <Barcode Format="BarcodeFormat.Ean13" Value="590123412345" Label="EAN-13 5901234123457" ShowDownload="true" FileName="ean13" />
+    <Barcode Format="BarcodeFormat.Code39" Value="RAYCRAFT-26" />
+    <Barcode Format="BarcodeFormat.Ean8" Value="9638507" />
+    <Barcode Format="BarcodeFormat.UpcA" Value="03600029145" />
+</div>
+
+@code {
+    private string? _text = "RAYCRAFT-2026";
+}

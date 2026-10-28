@@ -1,0 +1,13 @@
+@using RayCraft.Examples.Components.Layout
+<Router AppAssembly="typeof(Program).Assembly">
+    <Found Context="routeData">
+        <RouteView RouteData="routeData" DefaultLayout="typeof(MainLayout)" />
+        <FocusOnNavigate RouteData="routeData" Selector="h1" />
+    </Found>
+    <NotFound>
+        <MainLayout>
+            <h1>Not found</h1>
+            <p>There is no such page. <a href="/">Back to the list of controls</a>.</p>
+        </MainLayout>
+    </NotFound>
+</Router>

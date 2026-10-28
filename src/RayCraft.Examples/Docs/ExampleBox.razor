@@ -1,0 +1,13 @@
+<section class="example" aria-label="@Title">
+    <h2 class="example__title">@Title</h2>
+    <div class="example__preview">
+        <DynamicComponent Type="ExampleType" />
+    </div>
+    @if (_source is not null)
+    {
+        <details class="example__source">
+            <summary>Show code</summary>
+            <pre tabindex="0"><code>@_source</code></pre>
+        </details>
+    }
+</section>

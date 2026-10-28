@@ -1,0 +1,26 @@
+<div class="stack">
+    <AddressField @bind-Values="_to" Label="To" Placeholder="Type a name or an address" HelperText="Paste a list like a@x.com; b@y.com. Double-click a chip to edit it."
+                  SuggestionsProvider="FindAsync" InvalidCountChanged="count => _invalid = count" />
+    <span>@_to.Count addresses, @_invalid not valid: @string.Join(" | ", _to)</span>
+</div>
+
+@code {
+    private IReadOnlyCollection<string> _to = new List<string> { "Ana Petrova <ana@example.com>", "not-an-address" };
+    private int _invalid = 1;
+
+    private static readonly AddressSuggestion[] Contacts =
+    [
+        new("ana@example.com", "Ana Petrova"),
+        new("boris@example.com", "Boris Ivanov"),
+        new("bilyana@example.org", "Bilyana Georgieva"),
+        new("support@example.com"),
+        new("ivan.dimitrov@example.net", "Ivan Dimitrov")
+    ];
+
+    private static async Task<IEnumerable<AddressSuggestion>> FindAsync(string text, CancellationToken token)
+    {
+        await Task.Delay(120, token);
+        return Contacts.Where(c => c.Address.Contains(text, StringComparison.OrdinalIgnoreCase)
+                                   || (c.Name?.Contains(text, StringComparison.OrdinalIgnoreCase) ?? false));
+    }
+}

@@ -1,0 +1,8 @@
+<div class="stack">
+    <AddressField @bind-Values="_cc" Label="Cc" AllowInvalid="false" MaxItems="4" Placeholder="Only valid addresses are kept" />
+    <span>@string.Join(" | ", _cc)</span>
+</div>
+
+@code {
+    private IReadOnlyCollection<string> _cc = new List<string>();
+}

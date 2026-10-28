@@ -1,0 +1,157 @@
+body {
+  margin: 0;
+  background: var(--raycraft-bg);
+  color: var(--raycraft-text);
+  font-family: var(--raycraft-font, system-ui, sans-serif);
+}
+
+.site__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  background: var(--raycraft-surface);
+  border-bottom: 1px solid var(--raycraft-border);
+}
+
+.site__brand {
+  color: var(--raycraft-text);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.site__body {
+  display: flex;
+  align-items: flex-start;
+}
+
+.site__nav {
+  flex: 0 0 13rem;
+  padding: 1rem;
+}
+
+.site__nav ul,
+.control-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site__nav a {
+  display: block;
+  padding: 0.4rem 0.5rem;
+  color: var(--raycraft-text);
+  text-decoration: none;
+}
+
+.site__nav a.active {
+  background: var(--raycraft-surface-2);
+  font-weight: 600;
+}
+
+.site__main {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 60rem;
+  padding: 1rem 1.5rem 3rem;
+}
+
+.lead {
+  font-size: 1.1rem;
+}
+
+.control-list li {
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--raycraft-border);
+}
+
+.control-list a {
+  display: inline-block;
+  min-width: 10rem;
+  font-weight: 600;
+}
+
+.example {
+  margin: 1.5rem 0;
+}
+
+.example__title {
+  margin: 0 0 0.5rem;
+  font-size: 1.1rem;
+}
+
+.example__preview {
+  padding: 1rem;
+  background: var(--raycraft-surface);
+  border: 1px solid var(--raycraft-border);
+}
+
+.example__source summary {
+  padding: 0.5rem 0;
+  cursor: pointer;
+}
+
+.example__source pre,
+.result {
+  margin: 0;
+  padding: 0.75rem;
+  overflow: auto;
+  background: var(--raycraft-surface-2);
+  border: 1px solid var(--raycraft-border);
+  font-size: 0.85rem;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.params {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.params th,
+.params td {
+  padding: 0.5rem;
+  border-bottom: 1px solid var(--raycraft-border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.params code {
+  word-break: break-word;
+}
+
+@media (max-width: 767px) {
+  .site__body {
+    flex-direction: column;
+  }
+
+  .site__nav {
+    flex-basis: auto;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .site__nav ul {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
+h1:focus {
+  outline: none;
+}
+
+.params th code {
+  white-space: nowrap;
+}

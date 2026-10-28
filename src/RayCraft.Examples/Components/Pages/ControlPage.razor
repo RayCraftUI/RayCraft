@@ -1,0 +1,47 @@
+@page "/controls/{Slug}"
+
+@if (_control is null)
+{
+    <h1>Not found</h1>
+    <p>There is no control called "@Slug". <a href="/">Back to the list</a>.</p>
+}
+else
+{
+    <PageTitle>@_control.Name · RayCraft examples</PageTitle>
+    <h1>@_control.Name</h1>
+    <p class="lead">@_control.Lead</p>
+
+    @foreach (var example in _control.Examples)
+    {
+        <ExampleBox ExampleType="example.Type" Title="@example.Title" />
+    }
+
+    <h2>Parameters</h2>
+    <table class="params">
+        <thead>
+            <tr><th scope="col">Name</th><th scope="col">Type</th><th scope="col">Default</th><th scope="col">Description</th></tr>
+        </thead>
+        <tbody>
+            @foreach (var row in _control.Parameters)
+            {
+                <tr>
+                    <th scope="row"><code>@row.Name</code></th>
+                    <td><code>@row.Type</code></td>
+                    <td>@row.Default</td>
+                    <td>@row.Description</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @if (_control.Notes.Count > 0)
+    {
+        <h2>Notes</h2>
+        <ul>
+            @foreach (var note in _control.Notes)
+            {
+                <li>@note</li>
+            }
+        </ul>
+    }
+}

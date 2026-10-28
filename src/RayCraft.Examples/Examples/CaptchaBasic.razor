@@ -1,0 +1,9 @@
+<div class="stack">
+    <Captcha @bind-Verified="_human" />
+    <Button Disabled="@(!_human)">Send message</Button>
+    <span>@(_human ? "Verified: the button is enabled." : "Solve the question to enable the button.")</span>
+</div>
+
+@code {
+    private bool _human;
+}

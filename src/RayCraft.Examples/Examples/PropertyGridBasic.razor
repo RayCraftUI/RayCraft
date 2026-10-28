@@ -1,0 +1,27 @@
+@using System.ComponentModel
+
+<div class="stack">
+    <PropertyGrid Value="_settings" Label="Settings" OnChanged="OnChange" />
+    <span>Last change: @_last</span>
+    <span>Object now: @_settings.Name, enabled @_settings.Enabled, @_settings.MaxUsers users, @_settings.Level, @_settings.Launch.ToString("d")</span>
+</div>
+
+@code {
+    private enum Level { Low, Medium, High }
+
+    private sealed class Settings
+    {
+        [Category("General"), DisplayName("Site name")] public string Name { get; set; } = "RayCraft";
+        [Category("General")] public bool Enabled { get; set; } = true;
+        [Category("General"), ReadOnly(true)] public string Version { get; set; } = "1.0";
+        [Category("Limits"), DisplayName("Maximum users"), Description("Largest number of signed-in users")] public int MaxUsers { get; set; } = 250;
+        [Category("Limits")] public double Ratio { get; set; } = 1.5;
+        [Category("Appearance")] public Level Level { get; set; } = Level.Medium;
+        [Category("Appearance")] public DateTime Launch { get; set; } = DateTime.Today;
+    }
+
+    private readonly Settings _settings = new();
+    private string _last = "none";
+
+    private void OnChange(PropertyChange change) => _last = $"{change.Name} = {change.Value}";
+}

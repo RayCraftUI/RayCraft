@@ -1,0 +1,16 @@
+<div class="stack">
+    <Splitter Size="30" CollapsiblePane="SplitterPane.First" @bind-Collapsed="_collapsed" SingleBelow="Breakpoint.Md" @bind-ActivePane="_active" Style="height:12rem">
+        <First>Folders. Press Enter or double-click the bar to collapse this pane.</First>
+        <Second>Messages. Below 768 px wide only one pane is shown.</Second>
+    </Splitter>
+    <div class="row">
+        <Button Variant="Variant.Outlined" OnClick="@(() => _collapsed = _collapsed == SplitterPane.None ? SplitterPane.First : SplitterPane.None)">Toggle first pane</Button>
+        <Button Variant="Variant.Outlined" OnClick="@(() => _active = _active == SplitterPane.First ? SplitterPane.Second : SplitterPane.First)">Switch the pane of the narrow mode</Button>
+    </div>
+    <span>Collapsed: @_collapsed. Narrow mode shows: @_active.</span>
+</div>
+
+@code {
+    private SplitterPane _collapsed;
+    private SplitterPane _active = SplitterPane.First;
+}
