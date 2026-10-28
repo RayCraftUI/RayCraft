@@ -4,7 +4,7 @@ Runnable examples for the free controls of [RayCraft.Blazor](https://www.nuget.o
 
 This repository holds only demo code. The library comes from the NuGet package and its source is not here.
 
-Support: https://support.raycraft.dev
+Support: https://support.raycraft.dev (support@raycraft.dev). Security reports: security@raycraft.dev, see SECURITY.md.
 
 ## Run
 
