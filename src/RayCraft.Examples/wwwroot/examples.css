@@ -177,7 +177,8 @@ html {
   color-scheme: light;
 }
 
-html[data-raycraft-theme='dark'] {
+html[data-raycraft-theme='dark'],
+html[data-raycraft-theme$='-dark'] {
   color-scheme: dark;
 }
 
@@ -834,4 +835,15 @@ pre {
 .example__preview .raycraft-colorpicker__preset {
   min-width: 24px;
   min-height: 24px;
+}
+
+.site__bar [role='menu'] {
+  max-height: calc(100vh - 5rem);
+  overflow-y: auto;
+  max-width: calc(100vw - 1rem);
+}
+
+.site__themes {
+  display: flex;
+  align-items: center;
 }

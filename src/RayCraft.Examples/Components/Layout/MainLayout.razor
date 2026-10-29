@@ -7,7 +7,9 @@
     <header class="site__bar">
         <a class="site__brand" href="/" aria-label="RayCraft examples, home"><img src="brand/logo-on-dark.svg" alt="RayCraft" /></a>
         <span class="site__tag">Examples</span>
-        <ThemeToggle />
+        <div class="site__themes" role="group" aria-label="Theme">
+            <ThemeMenu />
+        </div>
     </header>
     <div class="site__body">
         <nav class="@(_navOpen ? "site__nav site__nav--open" : "site__nav")" aria-label="Controls">
