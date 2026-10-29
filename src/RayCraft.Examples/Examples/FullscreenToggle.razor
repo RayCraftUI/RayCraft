@@ -1,0 +1,12 @@
+<Fullscreen OnChanged="@(on => _on = on)" Style="padding:1rem;border:1px solid var(--raycraft-border);background:var(--raycraft-surface)">
+    <h3 style="margin-top:0">Status board</h3>
+    <Grid>
+        <GridItem Span="6"><Statistic Label="Orders today" Value="128" /></GridItem>
+        <GridItem Span="6"><Statistic Label="Open tickets" Value="37" /></GridItem>
+    </Grid>
+    <p>Full screen: @(_on ? "on" : "off")</p>
+</Fullscreen>
+
+@code {
+    private bool _on;
+}

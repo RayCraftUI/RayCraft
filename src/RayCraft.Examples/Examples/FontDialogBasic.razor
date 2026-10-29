@@ -1,0 +1,25 @@
+@inject IRayCraftDialogs Dialogs
+
+<div class="doc-stack">
+    <Button OnClick="Pick">Choose a font</Button>
+    <p style="@Style">The quick brown fox jumps over the lazy dog.</p>
+    <span>@_font.Family, @_font.Size pt@(_font.Bold ? ", bold" : "")@(_font.Italic ? ", italic" : "")@(_font.Underline ? ", underline" : "")</span>
+</div>
+
+@code {
+    private FontChoice _font = new("Georgia", 14);
+
+    private string Style =>
+        $"font-family:'{_font.Family}';font-size:{_font.Size.ToString(System.Globalization.CultureInfo.InvariantCulture)}pt;font-weight:{(_font.Bold ? 700 : 400)};font-style:{(_font.Italic ? "italic" : "normal")};text-decoration:{(_font.Underline ? "underline" : "none")}";
+
+    private async Task Pick()
+    {
+        var result = await Dialogs.ShowAsync<FontDialog>("Choose a font", new Dictionary<string, object?>
+        {
+            ["Value"] = _font,
+            ["Families"] = new[] { "Georgia", "Arial", "Courier New", "Verdana" },
+            ["Sizes"] = new[] { 10d, 12d, 14d, 18d, 24d }
+        });
+        if (!result.Canceled) _font = result.GetData<FontChoice>() ?? _font;
+    }
+}

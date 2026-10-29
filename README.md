@@ -4,7 +4,7 @@ Source: https://github.com/RayCraftUI/RayCraft
 
 Runnable examples for the free controls of [RayCraft.Blazor](https://www.nuget.org/packages/RayCraft.Blazor): 160 control pages in 18 groups, each with live examples, their source and the table of parameters. The home page lists the groups and has a search box.
 
-Coverage: 154 of the 160 controls have an example of their own or are shown in use inside another example; the remaining six (DialogHost, Lightbox, ColorDialog, FontDialog, Statistic, Fullscreen) have a page with the parameters and no example yet. Examples that do not compile against the package or need controls outside it are listed with the reason in `tools/excluded-examples.json`.
+Coverage: all 160 controls have a page. 154 have an example of their own; the other six (Radio, GridItem, NavItem, NavGroup, MenuItem and Icon) are shown in use inside other examples. Examples that do not compile against the package or need controls outside it are listed with the reason in `tools/excluded-examples.json`. Parameter descriptions come from the written documentation of the source demo where it has one (about two thirds of the parameters); the rest show a dash, because the package has no XML documentation.
 
 This repository holds only demo code. The library comes from the NuGet package and its source is not here.
 
@@ -24,7 +24,7 @@ Open the address that the command prints. The theme button in the top bar switch
 
 - `src/RayCraft.Examples/Examples` has one `.razor` file per example. Their source is embedded and shown on the pages.
 - `src/RayCraft.Examples/Docs/ExampleIndex.g.cs` is generated and lists the controls by group with their examples. `ManualDocs.cs` has the written descriptions of the first eight controls. `ControlCatalog.cs` joins them, and `ParameterReflector.cs` reads the parameters from the package.
-- `tools/generate-examples.mjs` rebuilds `Examples` and the index from a folder of source examples: `node tools/generate-examples.mjs <folder> <product name in the source>`. `tools/free-controls.json` has the groups, `tools/excluded-examples.json` the skipped examples.
+- `tools/generate-examples.mjs` rebuilds `Examples`, the index and `Docs/WrittenDocs.g.cs` (leads and parameter descriptions) from the folder of a source demo: `node tools/generate-examples.mjs <folder with Examples, Docs and Pages/Components> <product name in the source>`. `tools/free-controls.json` has the groups, `tools/excluded-examples.json` the skipped examples, `tools/manual-examples.json` the examples written by hand that the generator keeps.
 - `src/RayCraft.Examples/Components` has the layout and the page that draws a control.
 
 ## Use in your own project

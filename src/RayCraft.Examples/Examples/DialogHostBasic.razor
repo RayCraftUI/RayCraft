@@ -1,0 +1,26 @@
+@inject IRayCraftDialogs Dialogs
+
+<div class="doc-stack">
+    <p>DialogHost is placed once, near the end of the layout (<code>&lt;DialogHost /&gt;</code> in MainLayout.razor of this site). It draws every dialog that is opened from code, so the buttons below only call IRayCraftDialogs.</p>
+    <div class="doc-row">
+        <Button OnClick="Ask">Open a confirmation</Button>
+        <Button Variant="Variant.Outlined" OnClick="Tell">Open a message</Button>
+    </div>
+    <span>Result: @_result</span>
+</div>
+
+@code {
+    private string _result = "-";
+
+    private async Task Ask()
+    {
+        var ok = await Dialogs.ConfirmAsync("Archive", "Move this project to the archive?", "Archive");
+        _result = ok ? "confirmed" : "cancelled";
+    }
+
+    private async Task Tell()
+    {
+        await Dialogs.AlertAsync("Done", "The message was shown by DialogHost.");
+        _result = "message closed";
+    }
+}

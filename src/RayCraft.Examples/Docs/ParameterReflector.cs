@@ -32,14 +32,18 @@ public static class ParameterReflector
                      .OrderBy(p => Depth(p.DeclaringType!, type))
                      .ThenBy(p => p.MetadataToken))
         {
-            var description = known is not null && known.TryGetValue(property.Name, out var text)
-                ? text
-                : CommonDescriptions.GetValueOrDefault(property.Name, "");
+            var description = Lookup(known, property.Name)
+                ?? Lookup(WrittenDocs.Parameters.GetValueOrDefault(name), property.Name)
+                ?? Lookup(WrittenDocs.Common, property.Name)
+                ?? CommonDescriptions.GetValueOrDefault(property.Name, "");
             rows.Add(new(property.Name, TypeName(property.PropertyType), DefaultOf(instance, property), description));
         }
 
         return rows;
     }
+
+    private static string? Lookup(IReadOnlyDictionary<string, string>? map, string key) =>
+        map is not null && map.TryGetValue(key, out var text) && text.Length > 0 ? text : null;
 
     private static int Depth(Type declaring, Type type)
     {

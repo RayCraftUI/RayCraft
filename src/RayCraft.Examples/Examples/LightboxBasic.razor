@@ -1,0 +1,31 @@
+<div class="doc-stack">
+    <div class="doc-row">
+        @for (var i = 0; i < _images.Length; i++)
+        {
+            var index = i;
+            <Button Variant="Variant.Outlined" OnClick="@(() => Show(index))">Open picture @(index + 1)</Button>
+        }
+    </div>
+    <span>Open: @(_open ? "yes" : "no"), picture @(_index + 1)</span>
+</div>
+
+<Lightbox Images="_images" @bind-Open="_open" @bind-Index="_index" />
+
+@code {
+    private bool _open;
+    private int _index;
+    private readonly GalleryImage[] _images = Enumerable.Range(1, 4).Select(Make).ToArray();
+
+    private void Show(int index)
+    {
+        _index = index;
+        _open = true;
+    }
+
+    private static GalleryImage Make(int i)
+    {
+        var colors = new[] { "0F6CBD", "107C10", "5C2D91", "8A5300" };
+        var svg = $"<svg xmlns='http://www.w3.org/2000/svg' width='800' height='500'><rect width='800' height='500' fill='#{colors[i - 1]}'/><text x='400' y='290' font-size='160' fill='#fff' text-anchor='middle' font-family='sans-serif'>{i}</text></svg>";
+        return new GalleryImage("data:image/svg+xml;charset=utf-8," + Uri.EscapeDataString(svg), $"Sample picture {i}", $"Picture {i} of 4");
+    }
+}

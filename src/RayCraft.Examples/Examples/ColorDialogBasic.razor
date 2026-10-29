@@ -1,0 +1,23 @@
+@inject IRayCraftDialogs Dialogs
+
+<div class="doc-stack">
+    <div class="doc-row">
+        <Button OnClick="Pick">Choose a color</Button>
+        <span style="@($"display:inline-block;width:2rem;height:2rem;border:1px solid currentColor;background:{_color}")" role="img" aria-label="@("Chosen color " + _color)"></span>
+    </div>
+    <span>Color: @_color</span>
+</div>
+
+@code {
+    private string _color = "#b3172a";
+
+    private async Task Pick()
+    {
+        var result = await Dialogs.ShowAsync<ColorDialog>("Choose a color", new Dictionary<string, object?>
+        {
+            ["Value"] = _color,
+            ["Presets"] = new[] { "#b3172a", "#141414", "#0b5a6b", "#1e6b2e", "#8a5300" }
+        });
+        if (!result.Canceled) _color = result.GetData<string>() ?? _color;
+    }
+}

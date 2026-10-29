@@ -1,14 +1,16 @@
 import { readFileSync, writeFileSync, readdirSync, mkdirSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { collectWrittenDocs, writtenDocsSource } from './written-docs.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
-const sourceDir = process.argv[2];
+const clientDir = process.argv[2];
 const sourceName = process.argv[3];
-if (!sourceDir || !sourceName || !existsSync(sourceDir)) {
-  console.error('usage: node tools/generate-examples.mjs <folder with the source *.razor examples> <product name used in the source>');
+if (!clientDir || !sourceName || !existsSync(join(clientDir, 'Examples'))) {
+  console.error('usage: node tools/generate-examples.mjs <source demo folder with Examples, Docs and Pages/Components> <product name used in the source>');
   process.exit(1);
 }
+const sourceDir = join(clientDir, 'Examples');
 
 const targetDir = join(root, 'src', 'RayCraft.Examples', 'Examples');
 const catalogFile = join(root, 'src', 'RayCraft.Examples', 'Docs', 'ExampleIndex.g.cs');
@@ -107,3 +109,7 @@ writeFileSync(catalogFile, lines.join('\n'));
 const covered = [...entries.values()].filter((e) => e.length > 0).length;
 console.log(`examples written: ${[...entries.values()].reduce((s, e) => s + e.length, 0)}, controls with own examples: ${covered} of ${names.length}`);
 console.log(`skipped: ${skipped.length}`);
+
+const written = collectWrittenDocs(clientDir, new Set(names), rename);
+writeFileSync(join(root, 'src', 'RayCraft.Examples', 'Docs', 'WrittenDocs.g.cs'), writtenDocsSource(written));
+console.log(`leads: ${Object.keys(written.leads).length}, controls with parameter descriptions: ${Object.keys(written.parameters).length}, parameter descriptions: ${Object.values(written.parameters).reduce((n, m) => n + Object.keys(m).length, 0)}, common: ${Object.keys(written.common).length}`);

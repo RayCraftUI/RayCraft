@@ -34,7 +34,7 @@ public static partial class ControlCatalog
             docs.Add(new(
                 slug,
                 entry.Name,
-                $"Live examples of {entry.Name} with their source, and its parameters.",
+                WrittenDocs.Leads.GetValueOrDefault(entry.Name) ?? $"Live examples of {entry.Name} with their source, and its parameters.",
                 entry.Examples,
                 ParameterReflector.Describe(entry.Name),
                 entry.Examples.Count == 0 ? ["This control has no example of its own yet."] : [],

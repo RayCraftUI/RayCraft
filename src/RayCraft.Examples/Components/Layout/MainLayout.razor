@@ -1,4 +1,6 @@
 @inherits LayoutComponentBase
+@implements IDisposable
+@inject NavigationManager Navigation
 
 <a class="site__skip" href="#content">Skip to the content</a>
 <div class="site">
@@ -8,8 +10,11 @@
         <ThemeToggle />
     </header>
     <div class="site__body">
-        <nav class="site__nav" aria-label="Controls">
-            <ControlFilter Compact InputId="nav-filter" />
+        <nav class="@(_navOpen ? "site__nav site__nav--open" : "site__nav")" aria-label="Controls">
+            <button type="button" class="site__navtoggle" aria-expanded="@(_navOpen ? "true" : "false")" aria-controls="site-navbody" @onclick="ToggleNav">All controls</button>
+            <div class="site__navbody" id="site-navbody">
+                <ControlFilter Compact InputId="nav-filter" />
+            </div>
         </nav>
         <main class="site__main" id="content" tabindex="-1">
             @Body
@@ -18,3 +23,19 @@
 </div>
 <DialogHost />
 <SnackbarHost />
+
+@code {
+    private bool _navOpen;
+
+    protected override void OnInitialized() => Navigation.LocationChanged += OnLocationChanged;
+
+    private void ToggleNav() => _navOpen = !_navOpen;
+
+    private void OnLocationChanged(object? sender, Microsoft.AspNetCore.Components.Routing.LocationChangedEventArgs args)
+    {
+        _navOpen = false;
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose() => Navigation.LocationChanged -= OnLocationChanged;
+}

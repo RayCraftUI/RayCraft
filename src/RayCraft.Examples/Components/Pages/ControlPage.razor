@@ -18,7 +18,7 @@ else
     }
 
     <h2>Parameters</h2>
-    <table class="params">
+    <table class="params" aria-label="@(_control.Name) parameters">
         <thead>
             <tr><th scope="col">Name</th><th scope="col">Type</th><th scope="col">Default</th><th scope="col">Description</th></tr>
         </thead>
@@ -27,9 +27,9 @@ else
             {
                 <tr>
                     <th scope="row"><code>@row.Name</code></th>
-                    <td><code>@row.Type</code></td>
-                    <td>@(string.IsNullOrEmpty(row.Default) ? "–" : row.Default)</td>
-                    <td>@(string.IsNullOrEmpty(row.Description) ? "–" : row.Description)</td>
+                    <td data-label="Type"><code>@row.Type</code></td>
+                    <td data-label="Default">@(string.IsNullOrEmpty(row.Default) ? "–" : row.Default)</td>
+                    <td data-label="Description">@(string.IsNullOrEmpty(row.Description) ? "–" : row.Description)</td>
                 </tr>
             }
         </tbody>
