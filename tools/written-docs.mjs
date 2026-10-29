@@ -5,7 +5,8 @@ const stringPattern = String.raw`"((?:[^"\\]|\\.)*)"`;
 const safeCommon = new Set(['Class', 'Style', 'ChildContent', 'Disabled', 'Placeholder', 'HelperText', 'Value', 'ValueChanged', 'ReadOnly', 'Invalid', 'DisplayName', 'Min', 'Max']);
 
 const decode = (text, rename, others) => {
-  const sentences = rename(JSON.parse(`"${text}"`)).split(/(?<=\.)\s+/);
+  const plain = rename(JSON.parse(`"${text}"`)).replace(/\b(int|long|double|decimal|float|bool|DateTime|TimeSpan|DateOnly|TimeOnly)\?(?=[\s,.)])/g, 'nullable $1');
+  const sentences = plain.split(/(?<=\.)\s+/);
   const kept = sentences.filter((sentence) => !others.some((name) => new RegExp(String.raw`\b${name}\b`).test(sentence)));
   return kept.join(' ');
 };
