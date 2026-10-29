@@ -7,6 +7,11 @@ on:
         description: "Tag of the GitHub Release that holds RayCraft.Blazor.<version>.nupkg"
         required: true
         type: string
+      push:
+        description: "Push to nuget.org (false = download and check only)"
+        required: true
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -61,13 +66,41 @@ jobs:
           fi
           echo "PACKAGE_FILE=$RUNNER_TEMP/pkg/$file" >> "$GITHUB_ENV"
 
+      - name: Check the package content
+        run: |
+          set -euo pipefail
+          x="$RUNNER_TEMP/unpacked"
+          mkdir -p "$x"
+          unzip -q "$PACKAGE_FILE" -d "$x"
+          test -f "$x/EULA.txt" || { echo "::error::EULA.txt is missing"; exit 1; }
+          test -f "$x/README.md" || { echo "::error::README.md is missing"; exit 1; }
+          if grep -q '\[date of publication\]' "$x/EULA.txt"; then
+            echo "::error::EULA.txt still has the empty date placeholder"
+            exit 1
+          fi
+          if find "$x" \( -name '*.pdb' -o -name '*.cs' -o -name '*.razor' -o -name '*.scss' \) | grep -q .; then
+            echo "::error::Source or symbol files are in the package"
+            exit 1
+          fi
+          if grep -rIil -E 'lumen|vjust|petargutev' "$x" --exclude='*.dll' | grep -q .; then
+            echo "::error::Internal names found in package files"
+            exit 1
+          fi
+          if grep -a -i -q -E 'lumen|vjust|D:\\source' "$x"/lib/*/*.dll; then
+            echo "::error::Internal names found in the assembly"
+            exit 1
+          fi
+          sha256sum "$PACKAGE_FILE"
+
       - name: Log in to nuget.org (OIDC, no API key)
+        if: ${{ inputs.push }}
         id: login
         uses: NuGet/login@8d196754b4036150537f80ac539e15c2f1028841 # v1.2.0
         with:
           user: ${{ env.NUGET_USER }}
 
       - name: Push to nuget.org
+        if: ${{ inputs.push }}
         env:
           NUGET_API_KEY: ${{ steps.login.outputs.NUGET_API_KEY }}
         run: |
