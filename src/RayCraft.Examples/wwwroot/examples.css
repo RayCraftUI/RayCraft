@@ -231,19 +231,19 @@ a {
   background: var(--ex-bar);
   color: var(--ex-on-bar);
   border-bottom: 1px solid var(--ex-line);
-  --raycraft-bg: #141414;
-  --raycraft-surface: #141414;
-  --raycraft-surface-2: #262626;
-  --raycraft-border: #6b6760;
-  --raycraft-border-strong: #f5f2ec;
-  --raycraft-text: #f5f2ec;
-  --raycraft-text-muted: #cfcac0;
-  --raycraft-primary: #ff6b7a;
-  --raycraft-primary-text: #ff8a96;
-  --raycraft-focus: #ff8a96;
 }
 
-.site__bar :focus-visible {
+.site__themes button[aria-haspopup] {
+  --raycraft-text: #f5f2ec;
+  --raycraft-border: #6b6760;
+  --raycraft-border-strong: #f5f2ec;
+  --raycraft-surface-2: #262626;
+  --raycraft-focus: #ff8a96;
+  --raycraft-primary-text: #ff8a96;
+  color: #f5f2ec;
+}
+
+.site__themes button[aria-haspopup]:focus-visible {
   outline-color: #ff8a96;
 }
 
