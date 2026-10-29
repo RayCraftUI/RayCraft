@@ -1,0 +1,48 @@
+@using Microsoft.JSInterop
+@inject IJSRuntime JS
+
+<section class="usage" aria-label="Usage code">
+    <p class="usage__note">
+        @if (Borrowed)
+        {
+            <span>This control has no example of its own. The code below is from the example “@Title”, where it is used.</span>
+        }
+        else
+        {
+            <span>From the example “@Title”, without the layout classes of this site.</span>
+        }
+    </p>
+    <p class="usage__note">Add <code>@@using RayCraft.Blazor.Components</code> to your <code>_Imports.razor</code>.</p>
+    <div class="usage__bar">
+        <button type="button" class="usage__copy" @onclick="CopyAsync">Copy code</button>
+        <span class="usage__status" role="status" aria-live="polite">@_status</span>
+    </div>
+    <pre tabindex="0"><code>@Code</code></pre>
+</section>
+
+@code {
+    private string _status = string.Empty;
+
+    [Parameter, EditorRequired] public Type Example { get; set; } = default!;
+
+    [Parameter] public string Title { get; set; } = string.Empty;
+
+    [Parameter] public bool Borrowed { get; set; }
+
+    private static readonly System.Text.RegularExpressions.Regex SiteClasses = new(@" [Cc]lass=""doc-[a-z-]+""");
+
+    private string Code => SiteClasses.Replace(ExampleSource.Read(Example) ?? string.Empty, string.Empty);
+
+    private async Task CopyAsync()
+    {
+        try
+        {
+            var ok = await JS.InvokeAsync<bool>("exampleCopy", Code);
+            _status = ok ? "Copied to the clipboard." : "Copying is not available in this browser. Select the code and copy it.";
+        }
+        catch (JSException)
+        {
+            _status = "Copying is not available in this browser. Select the code and copy it.";
+        }
+    }
+}

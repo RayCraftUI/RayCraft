@@ -32,4 +32,20 @@
     <p class="about__contact">Support: <a href="mailto:support@raycraft.dev">support@raycraft.dev</a>. Security reports: <a href="mailto:security@raycraft.dev">security@raycraft.dev</a>.</p>
 </section>
 
+<section class="getstarted" aria-labelledby="start-title">
+    <h2 id="start-title" class="about__title">Use it in your project</h2>
+    <pre tabindex="0"><code>dotnet add package RayCraft.Blazor
+
+// Program.cs
+builder.Services.AddRayCraft();
+
+&lt;!-- App.razor, in the head and before the end of the body --&gt;
+&lt;link rel="stylesheet" href="_content/RayCraft.Blazor/css/raycraft.css" /&gt;
+&lt;script src="_content/RayCraft.Blazor/raycraft.js"&gt;&lt;/script&gt;
+
+@@* _Imports.razor *@@
+@@using RayCraft.Blazor.Components</code></pre>
+    <p class="about__contact">Use an interactive render mode. <code>Program.cs</code> and <code>App.razor</code> of this site show all of it.</p>
+</section>
+
 <ControlFilter InputId="home-filter" />

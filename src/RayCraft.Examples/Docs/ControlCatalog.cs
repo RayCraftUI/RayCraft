@@ -27,7 +27,7 @@ public static partial class ControlCatalog
             var slug = Slugify(entry.Name);
             if (manual.TryGetValue(slug, out var own))
             {
-                docs.Add(own with { Category = entry.Category, Parameters = Merge(entry.Name, own.Parameters) });
+                docs.Add(own with { Category = entry.Category, Parameters = Merge(entry.Name, own.Parameters), Usage = entry.Usage, UsageBorrowed = entry.UsageBorrowed });
                 continue;
             }
 
@@ -38,7 +38,9 @@ public static partial class ControlCatalog
                 entry.Examples,
                 ParameterReflector.Describe(entry.Name),
                 entry.Examples.Count == 0 ? ["This control has no example of its own yet."] : [],
-                entry.Category));
+                entry.Category,
+                entry.Usage,
+                entry.UsageBorrowed));
         }
 
         return docs;

@@ -100,7 +100,18 @@ for (const [category, list] of Object.entries(free)) {
     const owners = new Set(entries.get(name).map(([base]) => base));
     const borrowed = own.length > 0 ? [] : (used.get(name) ?? []).filter((b) => !owners.has(b)).slice(0, 2)
       .map((b) => `new(${quote('In use: ' + b.replace(/([a-z0-9])([A-Z])/g, '$1 $2'))}, typeof(Examples.${b}))`);
-    lines.push(`        new(${quote(category)}, ${quote(name)}, [${[...own, ...borrowed].join(', ')}]),`);
+    const sizeOf = (base) => readFileSync(join(targetDir, base + '.razor'), 'utf8').length;
+    const usesSample = (base) => readFileSync(join(targetDir, base + '.razor'), 'utf8').includes('SampleData');
+    const candidates = entries.get(name).map(([base, title]) => ({ base, title }));
+    candidates.sort((a, b) => Number(usesSample(a.base)) - Number(usesSample(b.base)) || sizeOf(a.base) - sizeOf(b.base));
+    let usage = 'null';
+    if (candidates.length > 0) {
+      usage = `new(${quote(candidates[0].title)}, typeof(Examples.${candidates[0].base}))`;
+    } else {
+      const other = (used.get(name) ?? []).filter((b) => !owners.has(b)).sort((a, b) => sizeOf(a) - sizeOf(b))[0];
+      if (other) usage = `new(${quote(other.replace(/([a-z0-9])([A-Z])/g, '$1 $2'))}, typeof(Examples.${other}))`;
+    }
+    lines.push(`        new(${quote(category)}, ${quote(name)}, [${[...own, ...borrowed].join(', ')}], ${usage}, ${candidates.length === 0}),`);
   }
 }
 lines.push('    ];', '}', '');

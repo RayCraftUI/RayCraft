@@ -35,6 +35,16 @@ else
         </tbody>
     </table>
 
+    <h2>Usage</h2>
+    @if (_control.Usage is { } usage)
+    {
+        <UsageBlock Example="usage.Type" Title="@usage.Title" Borrowed="_control.UsageBorrowed" />
+    }
+    else
+    {
+        <p>See the examples above.</p>
+    }
+
     @if (_control.Notes.Count > 0)
     {
         <h2>Notes</h2>
