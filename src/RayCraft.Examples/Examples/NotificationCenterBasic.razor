@@ -1,7 +1,7 @@
-<div style="display:flex;justify-content:flex-end">
+<div class="doc-row" style="align-items:center">
     <NotificationCenter Items="_items" OnItemClick="Clicked" />
+    <span>@_message</span>
 </div>
-<p>@_message</p>
 
 @code {
     private string _message = "Open the bell, read a notification or dismiss one.";

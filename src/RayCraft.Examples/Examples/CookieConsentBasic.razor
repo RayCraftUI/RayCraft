@@ -1,9 +1,13 @@
 @inject IRayCraftStorage Storage
 
-<CookieConsent @ref="_consent" PolicyHref="#privacy" OnConsent="Decided" />
-<Button Variant="Variant.Outlined" OnClick="Reopen">Change cookie settings</Button>
-<Button Variant="Variant.Text" OnClick="Forget">Forget my choice</Button>
-<p>@_message</p>
+<div style="position:relative;transform:translateZ(0);min-height:18rem;overflow:hidden">
+    <CookieConsent @ref="_consent" PolicyHref="#privacy" OnConsent="Decided" />
+    <div class="doc-row">
+        <Button Variant="Variant.Outlined" OnClick="Reopen">Change cookie settings</Button>
+        <Button Variant="Variant.Text" OnClick="Forget">Forget my choice</Button>
+    </div>
+    <p>@_message</p>
+</div>
 
 @code {
     private CookieConsent? _consent;
