@@ -1,0 +1,33 @@
+<div class="doc-stack">
+    <ItemsTable Items="_orders" Dense="true" Bordered="true" RowClass="@(o => o.Total > 100 ? "doc-note" : null)" Caption="Orders">
+        <HeaderContent>
+            <tr><th>Order</th><th>Total</th></tr>
+        </HeaderContent>
+        <RowTemplate Context="order">
+            <tr><td>@order.Id</td><td>@order.Total.ToString("0.00")</td></tr>
+        </RowTemplate>
+        <FooterContent>
+            <tr><td>Sum</td><td>@_orders.Sum(o => o.Total).ToString("0.00")</td></tr>
+        </FooterContent>
+    </ItemsTable>
+    <ItemsTable Items="_none" Loading="_loading" EmptyColumnSpan="2" Caption="Loading and empty">
+        <HeaderContent>
+            <tr><th>Order</th><th>Total</th></tr>
+        </HeaderContent>
+        <RowTemplate Context="order">
+            <tr><td>@order.Id</td><td>@order.Total</td></tr>
+        </RowTemplate>
+        <NoRecordsContent>
+            <tr><td colspan="2">Nothing to show.</td></tr>
+        </NoRecordsContent>
+    </ItemsTable>
+    <Button OnClick="() => _loading = !_loading">Toggle loading</Button>
+</div>
+
+@code {
+    private record Order(int Id, decimal Total);
+
+    private bool _loading;
+    private readonly Order[] _none = [];
+    private readonly Order[] _orders = [new(1001, 45.5m), new(1002, 128m), new(1003, 99.99m)];
+}

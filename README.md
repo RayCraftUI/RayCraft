@@ -2,9 +2,9 @@
 
 Source: https://github.com/RayCraftUI/RayCraft
 
-Runnable examples for the free controls of [RayCraft.Blazor](https://www.nuget.org/packages/RayCraft.Blazor): 160 control pages in 18 groups, each with live examples, their source and the table of parameters. The home page lists the groups and has a search box.
+Runnable examples for the free controls of [RayCraft.Blazor](https://www.nuget.org/packages/RayCraft.Blazor): 162 control pages in 18 groups, each with live examples, their source and the table of parameters. The home page lists the groups and has a search box.
 
-Coverage: all 160 controls have a page. 154 have an example of their own; the other six (Radio, GridItem, NavItem, NavGroup, MenuItem and Icon) are shown in use inside other examples. Examples that do not compile against the package or need controls outside it are listed with the reason in `tools/excluded-examples.json`. Parameter descriptions come from the written documentation of the source demo where it has one (about two thirds of the parameters); the rest show a dash, because the package has no XML documentation.
+Coverage: all 162 controls have a page. 156 have an example of their own; the other six (Radio, GridItem, NavItem, NavGroup, MenuItem and Icon) are shown in use inside other examples. Examples that do not compile against the package or need controls outside it are listed with the reason in `tools/excluded-examples.json`. Parameter descriptions come from the written documentation of the source demo where it has one (about two thirds of the parameters); the rest show a dash, because the package has no XML documentation.
 
 This repository holds only demo code. The library comes from the NuGet package and its source is not here.
 

@@ -1,0 +1,27 @@
+<ItemsTable TItem="Member" Items="_members" Striped="true" Hover="true" Caption="Team members" OnRowClick="OnRowClick">
+    <HeaderContent>
+        <tr><th>Name</th><th>Role</th><th>City</th></tr>
+    </HeaderContent>
+    <RowTemplate Context="member">
+        <tr><td>@member.Name</td><td>@member.Role</td><td>@member.City</td></tr>
+    </RowTemplate>
+    <NoRecordsContent>
+        <tr><td colspan="3">No members.</td></tr>
+    </NoRecordsContent>
+</ItemsTable>
+<p>Clicked: @_clicked</p>
+
+@code {
+    private record Member(string Name, string Role, string City);
+
+    private string _clicked = "none";
+
+    private readonly Member[] _members =
+    [
+        new("Ivan Petrov", "Engineer", "Sofia"),
+        new("Maria Georgieva", "Designer", "Plovdiv"),
+        new("Georgi Dimitrov", "Analyst", "Varna")
+    ];
+
+    private void OnRowClick(Member member) => _clicked = member.Name;
+}

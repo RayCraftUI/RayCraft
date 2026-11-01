@@ -1,0 +1,13 @@
+<div class="doc-stack">
+    <Select TValue="string" @bind-Value="_size" Label="Size">
+        <SelectOption TValue="string" Value="@("S")">Small</SelectOption>
+        <SelectOption TValue="string" Value="@("M")">Medium</SelectOption>
+        <SelectOption TValue="string" Value="@("L")">Large</SelectOption>
+        <SelectOption TValue="string" Value="@("XL")" Disabled="true">Extra large (sold out)</SelectOption>
+    </Select>
+    <span>Selected: @_size</span>
+</div>
+
+@code {
+    private string _size = "M";
+}

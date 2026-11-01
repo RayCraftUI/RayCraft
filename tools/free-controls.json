@@ -23,6 +23,7 @@
   ],
   "ListSelection": [
     "Select",
+    "SelectOption",
     "DropDownList",
     "MultiSelect",
     "ListBox",
@@ -174,6 +175,7 @@
   ],
   "LightData": [
     "Table",
+    "ItemsTable",
     "List",
     "Repeater",
     "VirtualList",
