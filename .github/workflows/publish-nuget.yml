@@ -4,14 +4,14 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: "Tag of the GitHub Release that holds RayCraft.Blazor.<version>.nupkg"
+        description: "Tag of the GitHub Release (for example v1.0.3) that holds RayCraft.Blazor.<version>.nupkg and .snupkg"
         required: true
         type: string
-      push:
-        description: "Push to nuget.org (false = download and check only)"
+      dry_run:
+        description: "Dry run: download and check only, nothing is pushed to nuget.org"
         required: true
         type: boolean
-        default: false
+        default: true
 
 permissions:
   contents: read
@@ -21,65 +21,114 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  publish:
+  check:
     runs-on: ubuntu-latest
-    environment: nuget-release
     timeout-minutes: 15
     permissions:
-      id-token: write
       contents: read
     env:
       RELEASE_TAG: ${{ inputs.tag }}
       GH_TOKEN: ${{ github.token }}
-      NUGET_USER: petergutev
+    outputs:
+      version: ${{ steps.files.outputs.version }}
     steps:
-      - name: Set up .NET
-        uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
-        with:
-          dotnet-version: "10.0.x"
-
-      - name: Download the package from the release
+      - name: Download the packages and the release notes
         run: |
           set -euo pipefail
           mkdir -p "$RUNNER_TEMP/pkg"
-          gh release download "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --pattern '*.nupkg' --dir "$RUNNER_TEMP/pkg"
+          gh release download "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --pattern '*.nupkg' --pattern '*.snupkg' --dir "$RUNNER_TEMP/pkg"
+          gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --json body --jq .body > "$RUNNER_TEMP/notes.txt"
           ls -l "$RUNNER_TEMP/pkg"
 
-      - name: Check that there is exactly one RayCraft.Blazor package
+      - name: Check the file names and the version against the tag
+        id: files
         run: |
           set -euo pipefail
           cd "$RUNNER_TEMP/pkg"
-          count=$(find . -maxdepth 1 -type f -name '*.nupkg' | wc -l)
-          if [ "$count" -ne 1 ]; then
-            echo "::error::Expected exactly one .nupkg in the release, found $count"
+          if ! [[ "$RELEASE_TAG" =~ ^v([0-9]+\.[0-9]+\.[0-9]+)$ ]]; then
+            echo "::error::Tag $RELEASE_TAG is not v<major>.<minor>.<patch>"
             exit 1
           fi
-          file=$(find . -maxdepth 1 -type f -name '*.nupkg' -printf '%f\n')
-          if ! [[ "$file" =~ ^RayCraft\.Blazor\.[0-9][0-9A-Za-z.+-]*\.nupkg$ ]]; then
-            echo "::error::File name $file is not RayCraft.Blazor.<version>.nupkg"
+          version="${BASH_REMATCH[1]}"
+          if [ "$(find . -maxdepth 1 -type f | wc -l)" -ne 2 ]; then
+            echo "::error::The release must hold exactly RayCraft.Blazor.$version.nupkg and RayCraft.Blazor.$version.snupkg"
             exit 1
           fi
-          id=$(unzip -p "$file" '*.nuspec' | sed -n 's:.*<id>\(.*\)</id>.*:\1:p' | head -n 1)
-          if [ "$id" != "RayCraft.Blazor" ]; then
-            echo "::error::Package id in the nuspec is '$id', expected RayCraft.Blazor"
+          test -f "RayCraft.Blazor.$version.nupkg" || { echo "::error::RayCraft.Blazor.$version.nupkg is missing"; exit 1; }
+          test -f "RayCraft.Blazor.$version.snupkg" || { echo "::error::RayCraft.Blazor.$version.snupkg is missing"; exit 1; }
+          for file in "RayCraft.Blazor.$version.nupkg" "RayCraft.Blazor.$version.snupkg"; do
+            id=$(unzip -p "$file" '*.nuspec' | sed -n 's:.*<id>\(.*\)</id>.*:\1:p' | head -n 1)
+            found=$(unzip -p "$file" '*.nuspec' | sed -n 's:.*<version>\(.*\)</version>.*:\1:p' | head -n 1)
+            if [ "$id" != "RayCraft.Blazor" ]; then
+              echo "::error::Package id in $file is '$id', expected RayCraft.Blazor"
+              exit 1
+            fi
+            if [ "$found" != "$version" ]; then
+              echo "::error::Version in $file is '$found', the tag says $version"
+              exit 1
+            fi
+          done
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - name: Check the SHA-256 against the release notes
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP/pkg"
+          for file in *.nupkg *.snupkg; do
+            expected=$(grep -i -E "^[[:space:]]*(SHA-?256[: ]+)?[0-9a-f]{64}[[:space:]]+\*?$file[[:space:]]*$|^[[:space:]]*$file[: ]+(SHA-?256[: ]+)?[0-9a-f]{64}[[:space:]]*$" "$RUNNER_TEMP/notes.txt" | grep -o -i -E '[0-9a-f]{64}' | head -n 1 | tr 'A-F' 'a-f')
+            if [ -z "$expected" ]; then
+              echo "::error::The release notes have no SHA-256 line for $file (use '<64 hex digits>  $file')"
+              exit 1
+            fi
+            actual=$(sha256sum "$file" | cut -d ' ' -f 1)
+            if [ "$expected" != "$actual" ]; then
+              echo "::error::SHA-256 of $file is $actual, the release notes say $expected"
+              exit 1
+            fi
+            echo "$actual  $file"
+          done
+
+      - name: Check that the version is not on nuget.org yet
+        env:
+          VERSION: ${{ steps.files.outputs.version }}
+        run: |
+          set -euo pipefail
+          status=$(curl -s -o /dev/null -w '%{http_code}' "https://api.nuget.org/v3-flatcontainer/raycraft.blazor/$VERSION/raycraft.blazor.nuspec")
+          if [ "$status" = "200" ]; then
+            echo "::error::RayCraft.Blazor $VERSION is already on nuget.org"
             exit 1
           fi
-          echo "PACKAGE_FILE=$RUNNER_TEMP/pkg/$file" >> "$GITHUB_ENV"
+          if [ "$status" != "404" ]; then
+            echo "::error::nuget.org answered $status, cannot tell if $VERSION exists"
+            exit 1
+          fi
 
       - name: Check the package content
+        env:
+          VERSION: ${{ steps.files.outputs.version }}
         run: |
           set -euo pipefail
           x="$RUNNER_TEMP/unpacked"
-          mkdir -p "$x"
-          unzip -q "$PACKAGE_FILE" -d "$x"
+          s="$RUNNER_TEMP/symbols"
+          mkdir -p "$x" "$s"
+          unzip -q "$RUNNER_TEMP/pkg/RayCraft.Blazor.$VERSION.nupkg" -d "$x"
+          unzip -q "$RUNNER_TEMP/pkg/RayCraft.Blazor.$VERSION.snupkg" -d "$s"
           test -f "$x/EULA.txt" || { echo "::error::EULA.txt is missing"; exit 1; }
           test -f "$x/README.md" || { echo "::error::README.md is missing"; exit 1; }
-          if grep -q '\[date of publication\]' "$x/EULA.txt"; then
+          if grep -q '\[[^]]*date of publication[^]]*\]' "$x/EULA.txt"; then
             echo "::error::EULA.txt still has the empty date placeholder"
+            exit 1
+          fi
+          if ! grep -q -E 'Effective Date: [0-9]{1,2} [A-Z][a-z]+ [0-9]{4}' "$x/EULA.txt"; then
+            echo "::error::EULA.txt has no effective date"
             exit 1
           fi
           if find "$x" \( -name '*.pdb' -o -name '*.cs' -o -name '*.razor' -o -name '*.scss' \) | grep -q .; then
             echo "::error::Source or symbol files are in the package"
+            exit 1
+          fi
+          if find "$s" -type f ! -name '*.pdb' ! -name '*.nuspec' ! -name '*.psmdcp' ! -name '*.rels' ! -name '*Content_Types*.xml' | grep -q .; then
+            echo "::error::The symbol package holds files other than .pdb"
             exit 1
           fi
           if grep -rIil -E 'lumen|vjust|petargutev' "$x" --exclude='*.dll' | grep -q .; then
@@ -90,21 +139,58 @@ jobs:
             echo "::error::Internal names found in the assembly"
             exit 1
           fi
-          sha256sum "$PACKAGE_FILE"
+          if grep -r -a -i -l -E 'lumen|vjust|petargutev|D:\\source|C:\\Users' "$s" | grep -q .; then
+            echo "::error::Internal names or local paths found in the symbol package"
+            exit 1
+          fi
+
+      - name: Keep the checked files for the publish job
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: packages
+          path: ${{ runner.temp }}/pkg
+          retention-days: 1
+          if-no-files-found: error
+
+  publish:
+    needs: check
+    if: ${{ !inputs.dry_run }}
+    runs-on: ubuntu-latest
+    environment: nuget-release
+    timeout-minutes: 15
+    permissions:
+      id-token: write
+      contents: read
+    env:
+      VERSION: ${{ needs.check.outputs.version }}
+      NUGET_USER: petergutev
+    steps:
+      - name: Set up .NET
+        uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Download the checked files
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: packages
+          path: ${{ runner.temp }}/pkg
 
       - name: Log in to nuget.org (OIDC, no API key)
-        if: ${{ inputs.push }}
         id: login
         uses: NuGet/login@8d196754b4036150537f80ac539e15c2f1028841 # v1.2.0
         with:
           user: ${{ env.NUGET_USER }}
 
-      - name: Push to nuget.org
-        if: ${{ inputs.push }}
+      - name: Push the package and the symbols to nuget.org
         env:
           NUGET_API_KEY: ${{ steps.login.outputs.NUGET_API_KEY }}
         run: |
-          dotnet nuget push "$PACKAGE_FILE" \
+          set -euo pipefail
+          dotnet nuget push "$RUNNER_TEMP/pkg/RayCraft.Blazor.$VERSION.nupkg" \
             --api-key "$NUGET_API_KEY" \
             --source https://api.nuget.org/v3/index.json \
-            --skip-duplicate
+            --no-symbols
+          dotnet nuget push "$RUNNER_TEMP/pkg/RayCraft.Blazor.$VERSION.snupkg" \
+            --api-key "$NUGET_API_KEY" \
+            --source https://api.nuget.org/v3/index.json
