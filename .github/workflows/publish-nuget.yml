@@ -106,6 +106,7 @@ jobs:
       - name: Check the package content
         env:
           VERSION: ${{ steps.files.outputs.version }}
+          INTERNAL_NAME_PATTERN: ${{ secrets.INTERNAL_NAME_PATTERN || vars.INTERNAL_NAME_PATTERN }}
         run: |
           set -euo pipefail
           x="$RUNNER_TEMP/unpacked"
@@ -131,16 +132,28 @@ jobs:
             echo "::error::The symbol package holds files other than .pdb"
             exit 1
           fi
-          if grep -rIil -E 'lumen|vjust|petargutev' "$x" --exclude='*.dll' | grep -q .; then
-            echo "::error::Internal names found in package files"
+          if [ -n "$INTERNAL_NAME_PATTERN" ]; then
+            if grep -rIil -E "$INTERNAL_NAME_PATTERN" "$x" --exclude='*.dll' | grep -q .; then
+              echo "::error::Internal names found in package files"
+              exit 1
+            fi
+            if grep -a -i -q -E "$INTERNAL_NAME_PATTERN" "$x"/lib/*/*.dll; then
+              echo "::error::Internal names found in the assembly"
+              exit 1
+            fi
+            if grep -r -a -i -l -E "$INTERNAL_NAME_PATTERN" "$s" | grep -q .; then
+              echo "::error::Internal names found in the symbol package"
+              exit 1
+            fi
+          else
+            echo "::warning::INTERNAL_NAME_PATTERN is not set, the internal-name check is skipped"
+          fi
+          if grep -a -i -q -E 'D:\\source' "$x"/lib/*/*.dll; then
+            echo "::error::A local path was found in the assembly"
             exit 1
           fi
-          if grep -a -i -q -E 'lumen|vjust|D:\\source' "$x"/lib/*/*.dll; then
-            echo "::error::Internal names found in the assembly"
-            exit 1
-          fi
-          if grep -r -a -i -l -E 'lumen|vjust|petargutev|D:\\source|C:\\Users' "$s" | grep -q .; then
-            echo "::error::Internal names or local paths found in the symbol package"
+          if grep -r -a -i -l -E 'D:\\source|C:\\Users' "$s" | grep -q .; then
+            echo "::error::Local paths found in the symbol package"
             exit 1
           fi
 

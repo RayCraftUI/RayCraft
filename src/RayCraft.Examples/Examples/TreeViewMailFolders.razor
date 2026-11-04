@@ -4,7 +4,7 @@
 
 <div class="doc-stack">
     <div class="doc-row">
-        <TreeView Items="_folders" ChildrenSelector="@(folder => folder.Children)" ExpandAll="true" ItemText="@(folder => folder.Name)"
+        <TreeView TItem="Folder" Items="_folders" ChildrenSelector="@(folder => folder.Children)" ExpandAll="true" ItemText="@(folder => folder.Name)"
                   ItemBadge="@(folder => folder.Unread > 0 ? folder.Unread.ToString() : null)" ItemBold="@(folder => folder.Unread > 0)"
                   ContextMenuItems="MenuFor" CanDrop="@((folder, payload) => payload is string)" OnDrop="@((TreeDropEventArgs<Folder> drop) => OnDropAsync(drop))"
                   @bind-SelectedItem="_selected" Label="Mail folders" />

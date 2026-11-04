@@ -1,4 +1,4 @@
-<TreeView Items="_roots" ChildrenLoader="LoadAsync" HasChildren="@(node => node.Depth < 3)" ItemText="@(node => node.Name)"
+<TreeView TItem="Node" Items="_roots" ChildrenLoader="LoadAsync" HasChildren="@(node => node.Depth < 3)" ItemText="@(node => node.Name)"
           @bind-SelectedItem="_selected" OnLoadError="@(_ => _failed = true)" Label="Remote folders" />
 <p>Selected: @(_selected?.Path ?? "none"). Folders loaded from the server: @_loadCount.@(_failed ? " The last load failed." : string.Empty)</p>
 
